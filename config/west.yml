@@ -23,16 +23,24 @@ manifest:
     remote: urob
 
   remotes:
+    - name: Good-Great-Grand-Wonderful
+      url-base: https://github.com/Good-Great-Grand-Wonderful
     - name: urob
       url-base: https://github.com/urob
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
 
   projects:
-    - name: zmk
-      remote: zmkfirmware
-      revision: 6e2ef41e022d555b10f116e395832913f71717b3 # main (2026-08-18)
-      import: app/west.yml
+#    - name: zmk
+#      remote: zmkfirmware
+#      revision: 6e2ef41e022d555b10f116e395832913f71717b3 # main (2026-08-18)
+#      import: app/west.yml
+
+    # ZMK Crosses keyboard module
+    - name: crosses-v2-zmk-firmware
+      remote: Good-Great-Grand-Wonderful
+      import: config/west.yml
+      revision: a4279793633de831c849e065663d01c05f1c89cd # main (2026-06-11)
 
     # ZMK modules
     - name: zmk-adaptive-key
@@ -69,6 +77,7 @@ manifest:
           - lvgl  # imported independently by ZMK
           - mbedtls
           - tinycrypt
+#          - nanopb
 
     # --- imported projects pinned by pin-west; do not edit ---
     - name: cmsis # via zephyr (west.yml)

@@ -18,3 +18,7 @@ include:
   - board: corneish_zen_right@2.0.0//zmk
   - board: glove80_lh
   - board: glove80_rh
+  - board: crosses_v2_left
+    artifact-name: crosses_v2_36_left
+  - board: crosses_v2_right
+    artifact-name: crosses_v2_36_right
