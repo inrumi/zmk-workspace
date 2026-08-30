@@ -6,8 +6,6 @@ modules
 firmware
 zephyr
 zmk
-zmk-*/
-crosses-v2*
 draw/base.yaml
 draw/overview.yaml
 .DS_Store

@@ -15,13 +15,9 @@ artifacts/
 # (Blocks millions of upstream lines; keeps AI focused on your config/)
 .west/
 zmk/
-zmk-*/
 zephyr/
-modules/
 tools/
 bootloader/
-firmware/
-draw/
 
 # 3. Build Artifacts & Intermediate Compiler Files
 .build/

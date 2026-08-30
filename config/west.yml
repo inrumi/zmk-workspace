@@ -23,7 +23,13 @@ manifest:
     remote: urob
 
   remotes:
-    - name: Good-Great-Grand-Wonderful
+    - name: englmaxi
+      url-base: https://github.com/englmaxi
+    - name: badjeff
+      url-base: https://github.com/badjeff
+    - name: black-trooper
+      url-base: https://github.com/black-trooper
+    - name: gggw
       url-base: https://github.com/Good-Great-Grand-Wonderful
     - name: urob
       url-base: https://github.com/urob
@@ -31,16 +37,46 @@ manifest:
       url-base: https://github.com/zmkfirmware
 
   projects:
-#    - name: zmk
-#      remote: zmkfirmware
-#      revision: 6e2ef41e022d555b10f116e395832913f71717b3 # main (2026-08-18)
-#      import: app/west.yml
+    - name: zmk
+      remote: zmkfirmware
+      revision: 6e2ef41e022d555b10f116e395832913f71717b3 # main (2026-08-18)
+      import: app/west.yml
 
-    # ZMK Crosses keyboard module
+    # ZMK CrossesV2 board
     - name: crosses-v2-zmk-firmware
-      remote: Good-Great-Grand-Wonderful
-      import: config/west.yml
-      revision: a4279793633de831c849e065663d01c05f1c89cd # main (2026-06-11)
+      remote: gggw
+      path: modules/boards/crosses-v2-zmk-firmware
+      revision: a4279793633de831c849e065663d01c05f1c89cd # main (2026-07-11)
+
+    # ZMK CrossesV2 modules
+    - name: zmk-input-processor-report-rate-limit
+      remote: badjeff
+      path: modules/zmk/input-processor-report-rate-limit
+      revision: b056cb135525933743e2627150fb390f9d4b2461 # main (2026-03-07)
+    - name: zmk-input-processor-xyz
+      remote: badjeff
+      path: modules/zmk/input-processor-xyz
+      revision: edb44b7261796a11b3aaecc0f75f1da615789b90 # main (2026-08-14)
+    - name: zmk-driver-paw3222
+      remote: black-trooper
+      path: modules/zmk/driver-paw3222
+      revision: 4797c7c094ae45722a43f3217b3261095df82eac # main (2026-05-22)
+    - name: zmk-behavior-paw32xx-res-cycle
+      remote: gggw
+      path: modules/zmk/behavior-paw32xx-res-cycle
+      revision: 98c8583f999ab810bfe2f87a663251e1d5064f03 # main (2026-07-01)
+    - name: zmk-input-processor-pipeline-switch
+      remote: gggw
+      path: modules/zmk/input-processor-pipeline-switch
+      revision: 6dde67a12f6c604300e94a412fb6f70a2cf33429 # main (2026-07-01)
+    - name: zmk-trackball-config
+      remote: gggw
+      path: modules/zmk/trackball-config
+      revision: 66af329fa4ea6484a09384f63189d921cf2df515 # main (2026-07-01)
+    - name: zmk-dongle-display
+      remote: englmaxi
+      path: modules/zmk/dongle-display
+      revision: 2bb333f87136d33e94a49d86236ed9ec254a8060 # main (2026-02-13)
 
     # ZMK modules
     - name: zmk-adaptive-key
@@ -77,7 +113,6 @@ manifest:
           - lvgl  # imported independently by ZMK
           - mbedtls
           - tinycrypt
-#          - nanopb
 
     # --- imported projects pinned by pin-west; do not edit ---
     - name: cmsis # via zephyr (west.yml)
