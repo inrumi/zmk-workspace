@@ -1,0 +1,252 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <input/processors.dtsi>
+#include <input/processors/report_rate_limit.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include "../../gggw/crosses_v2/layout_36.dtsi"
+
+/ {
+    chosen {
+        zmk,kscan = &mock_kscan;
+        zmk,matrix-transform = &thirty_six_transform;
+        
+        // Trackball config link
+        gggw,trackball-config-uart = &tbcfg_acm;
+    };
+
+    mock_kscan: mock_kscan_0 {
+        compatible = "zmk,kscan-mock";
+        columns = <0>;
+        rows = <0>;
+        events = <0>;
+    };
+
+    thirty_six_transform: keymap_transform2 {
+      compatible = "zmk,matrix-transform";
+      columns = <12>;
+      rows = <5>;
+      map = <
+        RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5)           RC(1,6) RC(1,7) RC(1,8) RC(1,9) RC(1,10)
+        RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5)           RC(2,6) RC(2,7) RC(2,8) RC(2,9) RC(2,10)
+        RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5)           RC(3,6) RC(3,7) RC(3,8) RC(3,9) RC(3,10)
+                        RC(4,3) RC(4,4) RC(4,5)           RC(4,6) RC(4,7) RC(4,8)
+      >;
+    };
+
+    zip_periph_ball: zip_periph_ball {
+      compatible = "zmk,input-processor-pipeline-switch";
+      #input-processor-cells = <0>;
+      persistent;
+      default-index = <1>;
+      cursor {
+        label = "Cursor";
+        input-processors = <&zip_report_rate_limit 2>;
+      };
+      scroll_up {
+        label = "Scroll Up";
+        input-processors = <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 8>, <&zip_report_rate_limit 16>;
+      };
+      scroll_down {
+        label = "Scroll Down";
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>, <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 8>, <&zip_report_rate_limit 16>;
+      };
+    };
+
+    zip_central_ball: zip_central_ball {
+      compatible = "zmk,input-processor-pipeline-switch";
+      #input-processor-cells = <0>;
+      persistent;
+      default-index = <0>;
+      cursor {
+        label = "Cursor";
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, <&zip_report_rate_limit 4>;
+      };
+      scroll_up {
+        label = "Scroll Up";
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>, <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 8>, <&zip_report_rate_limit 16>;
+      };
+      scroll_down {
+        label = "Scroll Down";
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>, <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 8>, <&zip_report_rate_limit 16>;
+      };
+    };
+
+    behaviors {
+      pipe_switch: pswitch {
+        compatible = "zmk,behavior-pipeline-switch";
+        #binding-cells = <2>;
+        processor = <&zip_periph_ball>;
+        display-name = "Ball Mode L";
+      };
+      pipe_switch_r: pswitchr {
+        compatible = "zmk,behavior-pipeline-switch";
+        #binding-cells = <2>;
+        processor = <&zip_central_ball>;
+        display-name = "Ball Mode R";
+      };
+      dpi_cycle_left: dpi_cy_l {
+        compatible = "zmk,behavior-paw32xx-res-cycle";
+        #binding-cells = <1>;
+        values = <608 798 988 1216 1596>;
+        display-name = "DPI Left";
+        persistent;
+      };
+      dpi_cycle_right: dpi_cy_r {
+        compatible = "zmk,behavior-paw32xx-res-cycle";
+        #binding-cells = <1>;
+        values = <608 798 988 1216 1596>;
+        display-name = "DPI Right";
+        persistent;
+      };
+      cpi_set_l: cpisetl {
+        compatible = "zmk,behavior-paw32xx-res-set";
+        #binding-cells = <2>;
+        default-cpi = <700>;
+        persistent;
+        load_delay = <1000>;
+      };
+      cpi_set_r: cpisetr {
+        compatible = "zmk,behavior-paw32xx-res-set";
+        #binding-cells = <2>;
+        default-cpi = <700>;
+        persistent;
+        load_delay = <1000>;
+      };
+    };
+
+    trackball_config {
+        compatible = "gggw,trackball-config";
+        left-pipeline = <&zip_periph_ball>;
+        right-pipeline = <&zip_central_ball>;
+        left-mode-behavior = <&pipe_switch>;
+        right-mode-behavior = <&pipe_switch_r>;
+        left-cpi = <&cpi_set_l>;
+        right-cpi = <&cpi_set_r>;
+    };
+};
+
+&zephyr_udc0 {
+    tbcfg_acm: tbcfg_acm {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
+
+// Two dummy sensors for the behaviors to point to so the web app can change DPI locally on central
+// (Though in a dongle setup, it relays it to peripherals via EVENT_SOURCE locality).
+// Actually, ZMK behaviors require the sensor_device phandle, so we must just point them to mock sensors on the dongle if they aren't relayed automatically?
+// No, ZMK's `paw32xx-res-set` requires a real or mock sensor device to compile.
+// I'll create a dummy spi node for them to satisfy phandles, or they can just sit there.
+// Let's add dummy sensor devices:
+&spi1 {
+    status = "okay";
+    dummy_sensor_l: dummy_sensor_l@0 {
+        compatible = "pixart,paw3222";
+        status = "okay";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        res-cpi = <700>;
+        irq-gpios = <&gpio0 0 0>;
+    };
+    dummy_sensor_r: dummy_sensor_r@1 {
+        compatible = "pixart,paw3222";
+        status = "okay";
+        reg = <1>;
+        spi-max-frequency = <2000000>;
+        res-cpi = <700>;
+        irq-gpios = <&gpio0 0 0>;
+    };
+};
+
+&dpi_cycle_left {
+    sensor_device = <&dummy_sensor_l>;
+};
+&dpi_cycle_right {
+    sensor_device = <&dummy_sensor_r>;
+};
+&cpi_set_l {
+    sensor_device = <&dummy_sensor_l>;
+};
+&cpi_set_r {
+    sensor_device = <&dummy_sensor_r>;
+};
+
+/ {
+        // trackball inputs from peripherals
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        trackball_split_0: trackball_split_0@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+
+        trackball_split_1: trackball_split_1@1 {
+            compatible = "zmk,input-split";
+            reg = <1>;
+        };
+    };
+
+    trackball_peripheral_listener: trackball_peripheral_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_split_0>;
+        input-processors = <&zip_periph_ball>;
+    };
+
+    trackball_central_listener: trackball_central_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_split_1>;
+        input-processors = <&zip_central_ball>;
+    };
+};
+
+&pinctrl {
+    i2c0_default: i2c0_default {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0,17)>,
+                <NRF_PSEL(TWIM_SCL, 0, 20)>;
+        };
+    };
+
+    i2c0_sleep: i2c0_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 0, 17)>,
+                <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            low-power-enable;
+        };
+    };
+};
+
+&i2c0 {
+    status = "okay";
+    compatible = "nordic,nrf-twi";
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+    oled: sh1106@3c {
+        compatible = "sinowealth,sh1106";
+        reg = <0x3c>;
+        width = <128>;
+        height = <64>;
+        segment-offset = <2>;
+        page-offset = <0>;
+        display-offset = <0>;
+        multiplex-ratio = <63>;
+        segment-remap;
+        com-invdir;
+        inversion-on;
+        prechargep = <0x22>;
+    };
+};
+
+/ {
+    chosen {
+        zephyr,display = &oled;
+    };
+};
+
+&gggw_crosses_36_layout {
+    transform = <&thirty_six_transform>;
+};

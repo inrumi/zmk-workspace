@@ -14,4 +14,7 @@
 #include "base.keymap"
 
 // Select 36keys CrossesV2 layout
-/{ chosen { zmk,physical-layout = &gggw_crosses_36_layout; }; };
+/{ chosen {
+    zmk,physical-layout = &gggw_crosses_36_layout;
+    zmk,matrix-transform = &thirty_six_transform;
+}; };

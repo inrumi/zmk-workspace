@@ -104,8 +104,14 @@
       #size-cells = <0>;
 
       trackball_peripheral_split: trackball_peripheral_split@0 {
+        status = "disabled";
         compatible = "zmk,input-split";
         reg = <0>;
+      };
+      trackball_central_split: trackball_central_split@1 {
+        status = "disabled";
+        compatible = "zmk,input-split";
+        reg = <1>;
       };
     };
 

@@ -14,7 +14,6 @@ artifacts/
 # 2. Upstream ZMK, Zephyr RTOS & West Modules
 # (Blocks millions of upstream lines; keeps AI focused on your config/)
 .west/
-zmk/
 zephyr/
 tools/
 bootloader/

@@ -1,0 +1,15 @@
+if SHIELD_CROSSES_V2_DONGLE
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_SPLIT_BLE
+    default y
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+config ZMK_KEYBOARD_NAME
+    default "Crosses Dongle"
+
+endif
