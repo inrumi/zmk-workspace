@@ -43,10 +43,10 @@ manifest:
       import: app/west.yml
 
     # ZMK CrossesV2 board
-    - name: crosses-v2-zmk-firmware
-      remote: gggw
-      path: modules/boards/crosses-v2-zmk-firmware
-      revision: a4279793633de831c849e065663d01c05f1c89cd # main (2026-07-11)
+#    - name: crosses-v2-zmk-firmware
+#      remote: gggw
+#      path: modules/boards/crosses-v2-zmk-firmware
+#      revision: a4279793633de831c849e065663d01c05f1c89cd # main (2026-07-11)
 
     # ZMK CrossesV2 modules
     - name: zmk-input-processor-report-rate-limit
