@@ -8,7 +8,6 @@
 / {
     chosen {
         zmk,kscan = &mock_kscan;
-        zmk,matrix-transform = &thirty_six_transform;
         
         // Trackball config link
         gggw,trackball-config-uart = &tbcfg_acm;
