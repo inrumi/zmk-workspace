@@ -1,6 +1,12 @@
-/* Override the central listener so the right half simply sends raw data without processing it locally */
+/* Turn off the local central listener, trackball events should not stay here */
 &trackball_central_listener {
-    input-processors = <>;
+    status = "disabled";
+};
+
+/* Turn ON the split relay node for the right ball and point it to the local sensor */
+&trackball_central_split {
+    status = "okay";
+    device = <&trackball_central>;
 };
 
 /* Disable trackball config so it doesn't fail building on the peripheral */
