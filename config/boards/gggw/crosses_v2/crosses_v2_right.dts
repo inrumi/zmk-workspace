@@ -90,15 +90,38 @@
 // Central-only: the host-facing config service (GATT). Lives on the central
 // because that is the host's single connection point; it relays to the left
 // ball and keeps the authoritative state mirror.
+/ {
+    trackball_config {
+        compatible = "gggw,trackball-config";
+        left-pipeline = <&zip_periph_ball>;
+        right-pipeline = <&zip_central_ball>;
+        left-mode-behavior = <&pipe_switch>;
+        right-mode-behavior = <&pipe_switch_r>;
+        left-cpi = <&cpi_set_l>;
+        right-cpi = <&cpi_set_r>;
+    };
+};
+
 // Central-only: a dedicated USB CDC-ACM serial port for the host config web app
 // (Web Serial), separate from ZMK Studio's RPC port. See
 // zmk-trackball-config/docs/adr/0004.
+&zephyr_udc0 {
+    tbcfg_acm: tbcfg_acm {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
 
+/ {
+    chosen {
+        gggw,trackball-config-uart = &tbcfg_acm;
+    };
+};
 
 // Overrides for the input listener node
 // The X/Y invert that used to live here now lives inside zip_central_ball's
 // "mouse"/Cursor pipeline; the switch lets the right ball select modes too.
-&trackball_central_split {
+&trackball_central_listener {
     status = "okay";
     device = <&trackball_central>;
+    input-processors = <&zip_central_ball>;
 };

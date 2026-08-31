@@ -1,0 +1,2 @@
+config SHIELD_CROSSES_V2_PERIPHERAL_RIGHT
+    def_bool $(shields_list_contains,crosses_v2_peripheral_right)
