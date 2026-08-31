@@ -35,6 +35,8 @@ manifest:
       url-base: https://github.com/urob
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: inrumi
+      url-base: https://github.com/inrumi
 
   projects:
     - name: zmk
@@ -64,9 +66,9 @@ manifest:
       path: modules/zmk/input-processor-pipeline-switch
       revision: 6dde67a12f6c604300e94a412fb6f70a2cf33429 # main (2026-07-01)
     - name: zmk-trackball-config
-      remote: gggw
+      remote: inrumi
       path: modules/zmk/trackball-config
-      revision: 66af329fa4ea6484a09384f63189d921cf2df515 # main (2026-07-01)
+      revision: main
     - name: zmk-dongle-display
       remote: englmaxi
       path: modules/zmk/dongle-display
