@@ -48,8 +48,14 @@
     ;
 };
 
+// Ensure the split node is awake on the central so it receives the peripheral's inputs
+&trackball_peripheral_split {
+    status = "okay";
+};
+
 &trackball_peripheral_listener {
     status = "okay";
+    input-processors = <&zip_periph_ball>;
 };
 
 &spi0 {

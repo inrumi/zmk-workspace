@@ -68,7 +68,7 @@ manifest:
     - name: zmk-trackball-config
       remote: inrumi
       path: modules/zmk/trackball-config
-      revision: main
+      revision: 7d29f68493f1e676cf7ae22336025d7f21786a68 # main (2026-08-31)
     - name: zmk-dongle-display
       remote: englmaxi
       path: modules/zmk/dongle-display

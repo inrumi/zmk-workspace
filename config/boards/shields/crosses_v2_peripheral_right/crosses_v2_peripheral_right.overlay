@@ -22,3 +22,12 @@
 &tbcfg_acm {
     status = "disabled";
 };
+
+/* Disable the left ball's split pipeline since this peripheral only has the right ball */
+&trackball_peripheral_split {
+    status = "disabled";
+};
+
+&trackball_peripheral_listener {
+    status = "disabled";
+};
