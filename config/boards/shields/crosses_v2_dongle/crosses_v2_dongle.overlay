@@ -122,6 +122,7 @@
         right-mode-behavior = <&pipe_switch_r>;
         left-cpi = <&cpi_set_l>;
         right-cpi = <&cpi_set_r>;
+        right-peripheral-source = <1>;
     };
 };
 
