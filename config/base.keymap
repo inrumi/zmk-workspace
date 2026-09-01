@@ -109,12 +109,25 @@ ZMK_MOD_MORPH(magic_shift_tap, bindings = <&shift_repeat>, <&caps_word>;
               mods = <(MOD_LSFT)>;)
 ZMK_ADAPTIVE_KEY(
     shift_repeat, bindings = <&sk LSHFT>;
-    repeat {
+    repeat_alpha {
       trigger-keys = <A B C D E F G H I J K L M N O P Q R S T U V W X Y Z>;
       bindings = <&key_repeat>;
       max-prior-idle-ms = <1200>;
       strict-modifiers;
-    };)
+    };
+    repeat_sym_unshifted {
+      trigger-keys = <COMMA DOT SLASH MINUS EQUAL BSLH GRAVE SQT SEMI LBKT RBKT>;
+      bindings = <&key_repeat>;
+      max-prior-idle-ms = <1200>;
+      strict-modifiers;
+    };
+    repeat_sym_shifted {
+      trigger-keys = <UNDER PLUS PIPE TILDE STAR AMPS CARET PRCNT DLLR HASH AT EXCL QMARK COLON LT GT LBRC RBRC LPAR RPAR DQT>;
+      bindings = <&key_repeat>;
+      max-prior-idle-ms = <1200>;
+      strict-modifiers;
+    };
+)
 &caps_word { // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
   /delete-property/ ignore-modifiers;
 };
