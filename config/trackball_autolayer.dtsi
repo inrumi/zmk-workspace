@@ -13,7 +13,7 @@
          * Allowed keys that will KEEP you in the MOUSE layer.
          */
         excluded-positions = <
-            RT0 RM0
+            RT0 RT1 RM0 RM1
         >;
     };
 };
@@ -21,4 +21,9 @@
 /* Attach to right-hand trackball listener (Central) */
 &trackball_central_listener {
     input-processors = <&zip_temp_mouse MOUSE 5000>, <&zip_central_ball>;
+
+    scroll {
+      layers = <NAV>;
+      input-processors = <&zip_xy_scaler 1 20>, <&zip_xy_to_scroll_mapper>, <&zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT)>;
+    };
 };
