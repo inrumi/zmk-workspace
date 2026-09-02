@@ -1,9 +1,11 @@
 .build
 .direnv
 .west
+.idea
 modules
 firmware
 zephyr
 zmk
 draw/base.yaml
 draw/overview.yaml
+.DS_Store

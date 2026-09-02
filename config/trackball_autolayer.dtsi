@@ -1,0 +1,29 @@
+#include <dt-bindings/zmk/pointing.h>
+#include <input/processors.dtsi>
+
+/ {
+    zip_temp_mouse: zip_temp_mouse {
+        compatible = "zmk,input-processor-temp-layer";
+        #input-processor-cells = <2>;
+
+        /* Don't switch if typing was detected within the last 150ms */
+        require-prior-idle-ms = <150>;
+
+        /*
+         * Allowed keys that will KEEP you in the MOUSE layer.
+         */
+        excluded-positions = <
+            RT0 RT1 RT2 RT3
+        >;
+    };
+};
+
+/* Attach to right-hand trackball listener (Central) */
+&trackball_central_listener {
+    input-processors = <&zip_temp_mouse MOUSE 5000>, <&zip_central_ball>;
+
+    scroll {
+      layers = <NAV>;
+      input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT)>, <&zip_xy_to_scroll_mapper>, <&zip_scroll_scaler 1 16>, <&zip_report_rate_limit 16>;
+    };
+};
