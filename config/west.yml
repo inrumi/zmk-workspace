@@ -58,9 +58,9 @@ manifest:
       path: modules/zmk/driver-paw3222
       revision: 4797c7c094ae45722a43f3217b3261095df82eac # main (2026-05-22)
     - name: zmk-behavior-paw32xx-res-cycle
-      remote: gggw
+      remote: inrumi
       path: modules/zmk/behavior-paw32xx-res-cycle
-      revision: 98c8583f999ab810bfe2f87a663251e1d5064f03 # main (2026-07-01)
+      revision: 732144de1228cc44cf704c1cd1fdcc59f8b05e49 # main (2026-07-01)
     - name: zmk-input-processor-pipeline-switch
       remote: gggw
       path: modules/zmk/input-processor-pipeline-switch
