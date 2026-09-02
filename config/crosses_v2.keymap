@@ -1,0 +1,19 @@
+#define CONFIG_WIRELESS
+#define HAS_TRACKBALL
+
+#define ZMK_BASE_LAYER(name, LT, RT, LM, RM, LB, RB, LH, RH) \
+    ZMK_LAYER( \
+        name, \
+        LT RT \
+        LM RM \
+        LB RB \
+        LH &none &none RH \
+    )
+
+#include "zmk-helpers/key-labels/36.h"
+#include "base.keymap"
+
+// Select 36keys CrossesV2 layout
+/{ chosen {
+    zmk,physical-layout = &gggw_crosses_36_layout;
+}; };

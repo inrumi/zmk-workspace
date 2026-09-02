@@ -23,16 +23,61 @@ manifest:
     remote: urob
 
   remotes:
+    - name: englmaxi
+      url-base: https://github.com/englmaxi
+    - name: badjeff
+      url-base: https://github.com/badjeff
+    - name: black-trooper
+      url-base: https://github.com/black-trooper
+    - name: gggw
+      url-base: https://github.com/Good-Great-Grand-Wonderful
     - name: urob
       url-base: https://github.com/urob
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: inrumi
+      url-base: https://github.com/inrumi
 
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: 6e2ef41e022d555b10f116e395832913f71717b3 # main (2026-08-18)
       import: app/west.yml
+
+    # ZMK CrossesV2 modules
+    - name: crosses-v2-zmk-firmware
+      remote: inrumi
+      path: modules/boards/crosses-v2-zmk-firmware
+      revision: 7a61ce152c3af0a08738cae64f65343625818a84 # main (2026-09-02)
+    - name: zmk-behavior-paw32xx-res-cycle
+      remote: inrumi
+      path: modules/zmk/behavior-paw32xx-res-cycle
+      revision: 732144de1228cc44cf704c1cd1fdcc59f8b05e49 # main (2026-08-31)
+    - name: zmk-trackball-config
+      remote: inrumi
+      path: modules/zmk/trackball-config
+      revision: 7d29f68493f1e676cf7ae22336025d7f21786a68 # main (2026-08-31)
+    - name: zmk-input-processor-report-rate-limit
+      remote: badjeff
+      path: modules/zmk/input-processor-report-rate-limit
+      revision: b056cb135525933743e2627150fb390f9d4b2461 # main (2026-03-07)
+    - name: zmk-input-processor-xyz
+      remote: badjeff
+      path: modules/zmk/input-processor-xyz
+      revision: edb44b7261796a11b3aaecc0f75f1da615789b90 # main (2026-08-14)
+    - name: zmk-driver-paw3222
+      remote: black-trooper
+      path: modules/zmk/driver-paw3222
+      revision: 4797c7c094ae45722a43f3217b3261095df82eac # main (2026-05-22)
+    - name: zmk-input-processor-pipeline-switch
+      remote: gggw
+      path: modules/zmk/input-processor-pipeline-switch
+      revision: 6dde67a12f6c604300e94a412fb6f70a2cf33429 # main (2026-09-02)
+    - name: zmk-dongle-display
+      remote: englmaxi
+      path: modules/zmk/dongle-display
+      revision: 2bb333f87136d33e94a49d86236ed9ec254a8060 # main (2026-02-13)
+
 
     # ZMK modules
     - name: zmk-adaptive-key

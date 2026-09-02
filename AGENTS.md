@@ -111,3 +111,15 @@ non-split, wired board; `config/glove80.keymap` shows a much larger board.
 Removing a feature: delete its `#include` from `base.keymap` (and its bindings/combo references),
 and if it was the only consumer of a module, drop the module's entry from `config/west.yml`. The
 modules used per feature are commented at the top of `base.keymap`.
+
+## AI Agent Workflow & Debugging Rules
+*(For Cursor, Junie, Claude, Gemini)*
+
+To minimize context gathering overhead in future sessions, follow these workflow rules:
+1. **Focus Area:** Firmware behavioral changes overwhelmingly reside in `config/boards/*.dts`, `*.overlay`, and `*.conf`. Do not look into `base.keymap` for trackball or sensor malfunction logic.
+2. **Behavior Locality (Crucial for split/dongles):** ZMK behaviors execute based on `locality` (e.g., `BEHAVIOR_LOCALITY_EVENT_SOURCE`). Understand whether the board is building as a Peripheral or a Central (Dongle). 
+   - **Dongle Layouts:** Both Left and Right halves are *peripherals*.
+   - **Pipelines:** Input processors (like `zmk,input-processor-pipeline-switch`) generally need to be bound in the **peripheral split nodes** (e.g., `&trackball_peripheral_split`) rather than the central listener, so changing pipeline Modes (`pipe_switch`) over BLE correctly intercepts the logical pipeline locally *before* traversing to the Dongle.
+3. **Module Interrogation & Ephemeral Code:** ZMK modules and their source code sit in `modules/zmk/` (e.g., `modules/zmk/trackball-config`). When an obscure node property fails, analyze the `.c` source inside `modules/zmk/` to understand exactly how the module triggers. **Think of `modules/` like `node_modules`**: DO NOT arbitrarily write patches to `modules/zmk/` since `west` fetches/overwrites them in CI (Github Actions). If a core C logic fix is absolutely necessary, propose converting the module to a local config-bound module by copying it into `config/` and manually re-routing `west.yml` (if the user permits). Otherwise, resolve configurations upstream in `config/boards/*.dts`.
+4. **Build & Verify Locally:** Always use `direnv exec . just build <target>` (e.g., `direnv exec . just build crosses_v2_dongle`) and confirm zero compiler errors before resolving your turn.
+5. **DO NOT Test/Flash/Commit:** The user tests all physical firmware flashes independently. Do not push, commit, or run firmware deployment tasks.

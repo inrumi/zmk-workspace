@@ -18,3 +18,9 @@ include:
   - board: corneish_zen_right@2.0.0//zmk
   - board: glove80_lh
   - board: glove80_rh
+  - board: crosses_v2_left
+  - board: crosses_v2_right
+  - board: crosses_v2_right
+    shield: crosses_v2_peripheral_right
+  - board: nice_nano//zmk
+    shield: crosses_v2_dongle dongle_display
