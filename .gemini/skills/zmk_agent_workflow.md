@@ -19,12 +19,13 @@
   When adding a new module or fork, you MUST follow this explicit format in `config/west.yml`:
   ```yaml
       - name: <module-name>
-        remote: <remote-name>
+        remote: <remote-name> # Note: 'remote' can be skipped if pulling from urob's repositories
         path: modules/<logical-group>/<module-name>
         revision: <full-commit-sha> # <branch> (YYYY-MM-DD)
   ```
   *   **`path`:** You must explicitly define `path:` pointing into the `modules/` directory (e.g. `modules/boards/...` or `modules/zmk/...`). If omitted, `west` will incorrectly dump the module into the root workspace folder.
   *   **`revision` & Comments:** You must pin specific full commit SHAs for reproducibility instead of branches. You MUST append an inline comment with the targeted branch and the date of the commit (`# main (YYYY-MM-DD)`) so humans can track the branch and age of the pinned code without checking GitHub.
+  *   **`remote`:** Explicitly declare the custom remote name unless pointing to `urob` repositories (as `urob` acts as the manifest default remote and can be omitted).
 - **Fixing Module Bugs using github CLI:**
   1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
   2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> HEAD:main`).
