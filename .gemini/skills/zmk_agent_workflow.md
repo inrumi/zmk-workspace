@@ -15,10 +15,20 @@
 - **`modules/` is like `node_modules`:** External modules (e.g., `zmk-trackball-config`, `zmk-input-processor-*`, `zmk-adaptive-key`, `zmk-helpers`) are checked out under `modules/` via `config/west.yml`.
 - **Moving to Modules is Encouraged:** Moving custom behaviors, sensor drivers, or entire board definitions into dedicated modules under `modules/zmk/` or `modules/boards/` is **allowed and healthy**, provided they are backed by a forked/synced repository defined in `config/west.yml`. This resolves modern ZMK CMake deprecation warnings about `config/boards`.
 - **Ephemeral Code:** Direct changes inside `modules/` compile locally but **WILL BE OVERWRITTEN/DELETED** on CI or `direnv exec . just sync`.
+- **Adding Custom Modules to `west.yml` Rules:**
+  When adding a new module or fork, you MUST follow this explicit format in `config/west.yml`:
+  ```yaml
+      - name: <module-name>
+        remote: <remote-name>
+        path: modules/<logical-group>/<module-name>
+        revision: <full-commit-sha> # <branch> (YYYY-MM-DD)
+  ```
+  *   **`path`:** You must explicitly define `path:` pointing into the `modules/` directory (e.g. `modules/boards/...` or `modules/zmk/...`). If omitted, `west` will incorrectly dump the module into the root workspace folder.
+  *   **`revision` & Comments:** You must pin specific full commit SHAs for reproducibility instead of branches. You MUST append an inline comment with the targeted branch and the date of the commit (`# main (YYYY-MM-DD)`) so humans can track the branch and age of the pinned code without checking GitHub.
 - **Fixing Module Bugs using github CLI:**
   1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
   2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> HEAD:main`).
-  3. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork.
+  3. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork following the format above.
   4. **Sync Space:** Run `direnv exec . just sync` to lock in the workspace.
   5. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
 
