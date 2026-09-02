@@ -5,20 +5,22 @@
 - **Core Files:** Hardware DTS, overlays, and board defconfigs conventionally reside in `config/boards/` and `config/boards/shields/`, though shifting them into dedicated `modules/boards/` repositories is the modern ZMK best practice.
 - **Keymaps & Behaviors:** Files in `config/*.keymap` and `config/*.dtsi` (like `base.keymap`, `combos.dtsi`, `trackball_autolayer.dtsi`) define layer bindings, combos, mod-morphs, and adaptive keys.
 
-## Building (No Testing)
+## Building & Syncing
 - **Environment:** The repository operates inside a Nix environment managed with direnv.
 - **Build Command:** Always use `direnv exec . just build <target>` (e.g., `direnv exec . just build crosses_v2_right`, `direnv exec . just build crosses_v2_dongle`). This utilizes the heavily cached setup and avoids rebuilding the Nix ecosystem.
+- **Syncing Modules:** Whenever a module is added, removed, or updated in `config/west.yml`, DO NOT run `west update` manually. Instead, run `direnv exec . just sync` (which wraps `west update` properly for this Nix ecosystem).
 - **Testing:** **DO NOT** attempt to run, flash, or test the firmware yourself. The USER manually flashes the compiled `.uf2` binaries onto the physical hardware.
 
 ## Zephyr / West Modules & Extensibility
 - **`modules/` is like `node_modules`:** External modules (e.g., `zmk-trackball-config`, `zmk-input-processor-*`, `zmk-adaptive-key`, `zmk-helpers`) are checked out under `modules/` via `config/west.yml`.
 - **Moving to Modules is Encouraged:** Moving custom behaviors, sensor drivers, or entire board definitions into dedicated modules under `modules/zmk/` or `modules/boards/` is **allowed and healthy**, provided they are backed by a forked/synced repository defined in `config/west.yml`. This resolves modern ZMK CMake deprecation warnings about `config/boards`.
-- **Ephemeral Code:** Direct changes inside `modules/` compile locally but **WILL BE OVERWRITTEN/DELETED** on CI or `west update`.
+- **Ephemeral Code:** Direct changes inside `modules/` compile locally but **WILL BE OVERWRITTEN/DELETED** on CI or `direnv exec . just sync`.
 - **Fixing Module Bugs using github CLI:**
   1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
   2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> HEAD:main`).
   3. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork.
-  4. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
+  4. **Sync Space:** Run `direnv exec . just sync` to lock in the workspace.
+  5. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
 
 ## Trackball Input Processors & Scrolling Architecture
 - **Pipeline Order Matters:** For smooth and controllable trackball scrolling, always apply transformations and mappers in this order:
@@ -55,4 +57,4 @@
   - When a `.dts` is shared between Central and Peripheral builds, the Peripheral overlay MUST explicitly set `status = "disabled";` for split listener/device nodes of the opposite half to prevent compile-time assertions.
 - **Kconfig Constraints:**
   - `CONFIG_ZMK_USB=n` must be set for pure split peripheral configurations (peripherals do not manage USB stacks).
-  - Register custom vendor prefixes in `../../dts/bindings/vendor-prefixes.txt` to eliminate Zephyr device tree compilation warnings.
+  - Register custom vendor prefixes in `config/dts/bindings/vendor-prefixes.txt` to eliminate Zephyr device tree compilation warnings.
