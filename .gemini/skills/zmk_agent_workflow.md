@@ -2,7 +2,7 @@
 
 ## Project Context
 - **Domain:** ZMK Firmware configuration for ergonomic keyboards (e.g., crossesV2, Glove80, Corne-ish Zen).
-- **Core Files:** Hardware DTS, overlays, and board defconfigs reside in `config/boards/` and `config/boards/shields/`.
+- **Core Files:** Hardware DTS, overlays, and board defconfigs conventionally reside in `config/boards/` and `config/boards/shields/`, though shifting them into dedicated `modules/boards/` repositories is the modern ZMK best practice.
 - **Keymaps & Behaviors:** Files in `config/*.keymap` and `config/*.dtsi` (like `base.keymap`, `combos.dtsi`, `trackball_autolayer.dtsi`) define layer bindings, combos, mod-morphs, and adaptive keys.
 
 ## Building (No Testing)
@@ -10,8 +10,9 @@
 - **Build Command:** Always use `direnv exec . just build <target>` (e.g., `direnv exec . just build crosses_v2_right`, `direnv exec . just build crosses_v2_dongle`). This utilizes the heavily cached setup and avoids rebuilding the Nix ecosystem.
 - **Testing:** **DO NOT** attempt to run, flash, or test the firmware yourself. The USER manually flashes the compiled `.uf2` binaries onto the physical hardware.
 
-## Zephyr / West Modules (WARNING: DO NOT PATCH DIRECTLY)
+## Zephyr / West Modules & Extensibility
 - **`modules/` is like `node_modules`:** External modules (e.g., `zmk-trackball-config`, `zmk-input-processor-*`, `zmk-adaptive-key`, `zmk-helpers`) are checked out under `modules/` via `config/west.yml`.
+- **Moving to Modules is Encouraged:** Moving custom behaviors, sensor drivers, or entire board definitions into dedicated modules under `modules/zmk/` or `modules/boards/` is **allowed and healthy**, provided they are backed by a forked/synced repository defined in `config/west.yml`. This resolves modern ZMK CMake deprecation warnings about `config/boards`.
 - **Ephemeral Code:** Direct changes inside `modules/` compile locally but **WILL BE OVERWRITTEN/DELETED** on CI or `west update`.
 - **Fixing Module Bugs using github CLI:**
   1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
