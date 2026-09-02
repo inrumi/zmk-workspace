@@ -13,9 +13,11 @@
 ## Zephyr / West Modules (WARNING: DO NOT PATCH DIRECTLY)
 - **`modules/` is like `node_modules`:** External modules (e.g., `zmk-trackball-config`, `zmk-input-processor-*`, `zmk-adaptive-key`, `zmk-helpers`) are checked out under `modules/` via `config/west.yml`.
 - **Ephemeral Code:** Direct changes inside `modules/` compile locally but **WILL BE OVERWRITTEN/DELETED** on CI or `west update`.
-- **Fixing Module Bugs:**
-  1. **Fork:** Push the fix to a GitHub fork and update `remote` and `revision` in `config/west.yml`.
-  2. **Local Directory:** Move the module into `config/modules/<module-name>` and set a local `path` in `config/west.yml`.
+- **Fixing Module Bugs using github CLI:**
+  1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
+  2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> HEAD:main`).
+  3. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork.
+  4. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
 
 ## Trackball Input Processors & Scrolling Architecture
 - **Pipeline Order Matters:** For smooth and controllable trackball scrolling, always apply transformations and mappers in this order:
@@ -26,6 +28,12 @@
 - **Scaler Tuning:**
   - `1 8`: Very responsive / fast (can feel too rapid on 600+ DPI optical trackballs).
   - `1 16`: Balanced, smooth, and controllable.
+
+## PAW32XX Sensor Properties & Resolution Set
+- **PAW3222 Hardware Specs:** The PAW3222 sensor operates in distinct hardware steps of 38 CPI, with boundaries from 608 to 4826 CPI.
+- **DTS Tooling:** The `min-cpi`, `max-cpi`, and `step-cpi` properties in bindings (e.g. `zmk,behavior-paw32xx-res-set`) exist so that external UI configurator apps (like the web app or generic slider widgets) know the actual device boundaries and can increment/decrement sliders cleanly.
+- **Boot Timing (load_delay):** When persisting CPI using the settings subsystem, writing SPI registers synchronously at early boot can fail due to power rail/USB/BLE churn. Using `load_delay = <1000>;` delays the SPI register commit by 1s.
+- **Central Dongle Safety:** In dongle configurations, the central MCU doesn't have a physical SPI sensor attached. The behaviors that load settings MUST have `sensor_device` flagged as `required: false` in the `.yaml` and MUST null-check the device pointer in `.c` code (e.g. `DEVICE_DT_GET_OR_NULL`) before attempting SPI transactions, otherwise Zephyr will panic/crash.
 
 ## Adaptive Keys (`zmk-adaptive-key`)
 - **Trigger Limits:** Each child trigger node inside `zmk,behavior-adaptive-key` allocates a static buffer sized by `CONFIG_ZMK_ADAPTIVE_KEY_MAX_TRIGGER_CONDITIONS` (default: 32).
