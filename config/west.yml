@@ -60,11 +60,11 @@ manifest:
     - name: zmk-behavior-paw32xx-res-cycle
       remote: inrumi
       path: modules/zmk/behavior-paw32xx-res-cycle
-      revision: 732144de1228cc44cf704c1cd1fdcc59f8b05e49 # main (2026-07-01)
+      revision: 732144de1228cc44cf704c1cd1fdcc59f8b05e49 # main (2026-08-31)
     - name: zmk-input-processor-pipeline-switch
       remote: gggw
       path: modules/zmk/input-processor-pipeline-switch
-      revision: 6dde67a12f6c604300e94a412fb6f70a2cf33429 # main (2026-07-01)
+      revision: 6dde67a12f6c604300e94a412fb6f70a2cf33429 # main (2026-09-02)
     - name: zmk-trackball-config
       remote: inrumi
       path: modules/zmk/trackball-config

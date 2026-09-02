@@ -13,7 +13,7 @@
          * Allowed keys that will KEEP you in the MOUSE layer.
          */
         excluded-positions = <
-            RT0 RT1 RT2 RM0
+            RT0 RT1 RT2 RT3
         >;
     };
 };

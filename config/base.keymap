@@ -64,6 +64,7 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
 #ifdef HAS_TRACKBALL
   #include "trackball_autolayer.dtsi"
+  ZMK_COMBO(mclk,  &mkp MCLK,    RT1 RT2,        MOUSE   , COMBO_TERM_FAST, COMBO_IDLE_FAST)
 #else
   #include "mouse.dtsi"
 #endif
@@ -144,7 +145,7 @@ ZMK_TAP_DANCE(num_dance, bindings = <&num_word NUM>, <&sl NUM>;
   ZMK_TRI_STATE(
       smart_mouse, bindings = <&tog MOUSE>, <&none>, <&tog MOUSE>;
       ignored-key-positions =
-          <RT0 RT1 RT2 RM0>;
+          <RT0 RT1 RT2 RT3>;
       ignored-layers = <MOUSE NAV FN>;)
 #else
   ZMK_TRI_STATE(
@@ -283,9 +284,9 @@ ZMK_BASE_LAYER(Sys,
 
 ZMK_BASE_LAYER(Mouse,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-    ___           ___           ___           ___           ___         ,   &mkp LCLK     &kp RSHFT     &mo NAV       ___           ___         ,
+    ___           ___           ___           ___           ___         ,   &mo NAV       &mkp LCLK     &mkp RCLK     &kp RSHFT     ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    ___           ___           ___           ___           ___         ,   &mkp RCLK     ___           ___           ___           ___         ,
+    ___           ___           ___           ___           ___         ,   ___           ___           ___           ___           ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     ___           ___           ___           ___           ___         ,   ___           ___           ___           ___           ___         ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
