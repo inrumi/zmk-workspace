@@ -55,4 +55,4 @@
   - When a `.dts` is shared between Central and Peripheral builds, the Peripheral overlay MUST explicitly set `status = "disabled";` for split listener/device nodes of the opposite half to prevent compile-time assertions.
 - **Kconfig Constraints:**
   - `CONFIG_ZMK_USB=n` must be set for pure split peripheral configurations (peripherals do not manage USB stacks).
-  - Register custom vendor prefixes in `config/dts/bindings/vendor-prefixes.txt` to eliminate Zephyr device tree compilation warnings.
+  - Register custom vendor prefixes in `../../dts/bindings/vendor-prefixes.txt` to eliminate Zephyr device tree compilation warnings.
