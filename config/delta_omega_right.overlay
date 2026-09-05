@@ -5,3 +5,7 @@
         led-blue = &led2;
     };
 };
+
+/* Disable hardware serial and SPI to reclaim D6, D7, and D8 for the keyboard matrix */
+&xiao_serial { status = "disabled"; };
+&xiao_spi { status = "disabled"; };
