@@ -37,6 +37,10 @@ manifest:
       url-base: https://github.com/zmkfirmware
     - name: inrumi
       url-base: https://github.com/inrumi
+    - name: unspecworks
+      url-base: https://github.com/unspecworks
+    - name: caksoylar
+      url-base: https://github.com/caksoylar
 
   projects:
     - name: zmk
@@ -45,10 +49,18 @@ manifest:
       import: app/west.yml
 
     # ZMK CrossesV2 modules
+    - name: zmk-keyboard-delta-omega
+      remote: unspecworks
+      path: modules/boards/zmk-keyboard-delta-omega
+      revision: 1df759db142469929841464905ec831ddb4e29b8 # main (2025-10-15)
     - name: crosses-v2-zmk-firmware
       remote: inrumi
       path: modules/boards/crosses-v2-zmk-firmware
       revision: 7a61ce152c3af0a08738cae64f65343625818a84 # main (2026-09-02)
+    - name: zmk-rgbled-widget
+      remote: caksoylar
+      path: modules/zmk/rgbled-widget
+      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b # main (2026-07-09)
     - name: zmk-behavior-paw32xx-res-cycle
       remote: inrumi
       path: modules/zmk/behavior-paw32xx-res-cycle
