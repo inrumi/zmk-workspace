@@ -52,7 +52,7 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       path: modules/zmk/rgbled-widget
-      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b
+      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b # main (2026-07-09)
     - name: zmk-keyboard-delta-omega
       remote: unspecworks
       path: modules/boards/keyboard-delta-omega
