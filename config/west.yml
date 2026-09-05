@@ -23,6 +23,10 @@ manifest:
     remote: urob
 
   remotes:
+    - name: caksoylar
+      url-base: https://github.com/caksoylar
+    - name: unspecworks
+      url-base: https://github.com/unspecworks
     - name: englmaxi
       url-base: https://github.com/englmaxi
     - name: badjeff
@@ -33,10 +37,10 @@ manifest:
       url-base: https://github.com/Good-Great-Grand-Wonderful
     - name: urob
       url-base: https://github.com/urob
-    - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
     - name: inrumi
       url-base: https://github.com/inrumi
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
 
   projects:
     - name: zmk
@@ -44,7 +48,17 @@ manifest:
       revision: 6e2ef41e022d555b10f116e395832913f71717b3 # main (2026-08-18)
       import: app/west.yml
 
-    # ZMK CrossesV2 modules
+    # ZMK Delta Omega board + modules
+    - name: zmk-rgbled-widget
+      remote: caksoylar
+      path: modules/zmk/rgbled-widget
+      revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b # main (2026-07-09)
+    - name: zmk-keyboard-delta-omega
+      remote: unspecworks
+      path: modules/boards/keyboard-delta-omega
+      revision: 1df759db142469929841464905ec831ddb4e29b8 # main (2025-10-15)
+
+    # ZMK CrossesV2 board + modules
     - name: crosses-v2-zmk-firmware
       remote: inrumi
       path: modules/boards/crosses-v2-zmk-firmware

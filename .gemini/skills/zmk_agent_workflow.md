@@ -69,3 +69,7 @@
 - **Kconfig Constraints:**
   - `CONFIG_ZMK_USB=n` must be set for pure split peripheral configurations (peripherals do not manage USB stacks).
   - Register custom vendor prefixes in `config/dts/bindings/vendor-prefixes.txt` to eliminate Zephyr device tree compilation warnings.
+
+## Hardware Target Definition in `build.yaml`
+- **Use ZMK Board Variants (`//zmk`):** When adding targets to `build.yaml`, always use the `//zmk` suffix for boards that have ZMK-specific overrides (e.g., use `xiao_ble//zmk` instead of `xiao_ble`). 
+  - **Reasoning:** Upstream Zephyr board definitions often rigidly lock pins for hardware features (like UART on D6 or SPI on D8). If you compile against the pure Zephyr definition (`xiao_ble`), those pins will silently fail to work for keyboard matrix scanning (causing entire dead rows or columns), and simply attempting to `status = "disabled";` the serial nodes in your `.overlay` will often **not** fix it. The `//zmk` out-of-tree variant provides the properly neutralized pin states required for keyboard matrices.
