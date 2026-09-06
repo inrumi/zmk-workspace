@@ -25,8 +25,6 @@ manifest:
   remotes:
     - name: caksoylar
       url-base: https://github.com/caksoylar
-    - name: unspecworks
-      url-base: https://github.com/unspecworks
     - name: englmaxi
       url-base: https://github.com/englmaxi
     - name: badjeff
@@ -54,9 +52,9 @@ manifest:
       path: modules/zmk/rgbled-widget
       revision: e6b467792a1dabef8cfa5c9fd26bfefc9c16662b # main (2026-07-09)
     - name: zmk-keyboard-delta-omega
-      remote: unspecworks
+      remote: inrumi
       path: modules/boards/keyboard-delta-omega
-      revision: 1df759db142469929841464905ec831ddb4e29b8 # main (2025-10-15)
+      revision: cb606ff4ceb9d4b9527d234d4786a142a3d6e4d1 # main (2026-09-06)
 
     # ZMK CrossesV2 board + modules
     - name: crosses-v2-zmk-firmware

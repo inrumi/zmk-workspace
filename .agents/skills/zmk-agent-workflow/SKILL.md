@@ -14,6 +14,7 @@ description: >-
 - **Commit Only When Explicitly Requested:** Even when on a feature branch (not `main`), do NOT create commits automatically. Only commit if the user explicitly asked or authorized you to commit.
 - **Keep Changes Visible:** Keep all changes uncommitted in the working tree so they remain clearly visible for the user to review.
 - **No Deploy / Flash:** Do NOT attempt to flash hardware or run deployment tasks. The user tests all physical firmware flashes independently.
+- **Pull Requests (PRs):** NEVER open Pull Requests directly against upstream or other people's repositories unless explicitly instructed. ALWAYS open the PR against the user's own fork (e.g., `gh pr create --repo <user>/<repo> ...`).
 
 ## Building & Workspace Toolchain (`Justfile` via Nix/direnv)
 The repository operates inside a Nix dev environment managed with direnv. Always execute `just` commands wrapped in `direnv exec .`:
@@ -51,10 +52,11 @@ The repository operates inside a Nix dev environment managed with direnv. Always
   *   **`remote`:** Explicitly declare the custom remote name unless pointing to `urob` repositories (as `urob` acts as the manifest default remote and can be omitted).
 - **Fixing Module Bugs using github CLI:**
   1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
-  2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> HEAD:main`).
-  3. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork following the format above.
-  4. **Sync Space:** Run `direnv exec . just sync` to lock in the workspace.
-  5. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
+  2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> <branch>`).
+  3. **Open PR:** If instructed to open a PR for the module, ALWAYS use the user's fork as the target repository (`gh pr create --repo <user>/<repo> --head <user>:<branch> ...`). `[CRITICAL: DO NOT OPEN PRs AGAINST UPSTREAM REPOS]`
+  4. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork following the format above.
+  5. **Sync Space:** Run `direnv exec . just sync` to lock in the workspace.
+  6. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
 
 ## Trackball Input Processors & Scrolling Architecture
 - **Pipeline Order Matters:** For smooth and controllable trackball scrolling, always apply transformations and mappers in this order:
