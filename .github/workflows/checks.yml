@@ -11,8 +11,8 @@ permissions:
   contents: read
 
 jobs:
-  check-central-boards:
-    name: Build Central Boards (macOS ARM)
+  build-crosses-v2-dongle:
+    name: crosses_v2_dongle
     runs-on: macos-15
 
     steps:
@@ -27,6 +27,20 @@ jobs:
 
       - name: Build Crosses V2 Dongle
         run: nix develop --command just build crosses_v2_dongle
+
+  build-delta-omega-left:
+    name: delta_omega_left
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+
+      - name: Initialize environment
+        run: nix develop --command just init
 
       - name: Build Delta Omega Left (Central)
         run: nix develop --command just build delta_omega_left
