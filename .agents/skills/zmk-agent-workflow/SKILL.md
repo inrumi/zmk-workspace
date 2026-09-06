@@ -99,6 +99,21 @@ The repository operates inside a Nix dev environment managed with direnv. Always
 - **Use ZMK Board Variants (`//zmk`):** When adding targets to `build.yaml`, always use the `//zmk` suffix for boards that have ZMK-specific overrides (e.g., use `xiao_ble//zmk` instead of `xiao_ble`). 
   - **Reasoning:** Upstream Zephyr board definitions often rigidly lock pins for hardware features (like UART on D6 or SPI on D8). If you compile against the pure Zephyr definition (`xiao_ble`), those pins will silently fail to work for keyboard matrix scanning (causing entire dead rows or columns), and simply attempting to `status = "disabled";` the serial nodes in your `.overlay` will often **not** fix it. The `//zmk` out-of-tree variant provides the properly neutralized pin states required for keyboard matrices.
 
+## CI Workflows & PR Required Checks
+- **Dedicated PR Checks Workflow (`.github/workflows/checks.yml`):**
+  - Pull request validation is consolidated into `.github/workflows/checks.yml` running on a single `macos-15` (aarch64-darwin) runner to conserve GitHub Actions runner minutes.
+  - **Adding a New Keyboard / Central Target Checklist:**
+    Whenever a new keyboard is introduced to the repository (in `build.yaml`, `config/`, or `modules/boards/`):
+    1. **Identify the Central Target:** Identify which half or dongle acts as Central (e.g., `<keyboard>_dongle` or `<keyboard>_left`). The Central target is critical because it compiles the central BLE stack, all shared keymaps, behaviors, display widgets, and input processors.
+    2. **Add Check Step to `.github/workflows/checks.yml`:** Add a build step for the new central target inside the `check-central-boards` job:
+       ```yaml
+       - name: Build <KeyboardName> Central
+         run: nix develop --command just build <new_central_target>
+       ```
+    3. **Validate Locally First:** Run `direnv exec . just build <new_central_target>` locally to verify that it builds with zero errors before committing.
+- **On-Demand Release Workflows:**
+  - `.github/workflows/build-nix.yml`, `.github/workflows/build.yml`, and `.github/workflows/test-build-env.yml` are set to `workflow_dispatch` (manual execution only). They should NEVER be configured with automatic `push:` triggers to prevent matrix bloat and duplicate check runs.
+
 ## Verification & Build Validation
 - **Always Validate with a Build:** After making any firmware, keymap, overlay, or DTS changes, ALWAYS verify that compilation succeeds by running:
   ```bash
