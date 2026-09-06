@@ -104,7 +104,7 @@ The repository operates inside a Nix dev environment managed with direnv. Always
   - Pull request validation is consolidated into `.github/workflows/checks.yml` running on a single `macos-15` (aarch64-darwin) runner to conserve GitHub Actions runner minutes.
   - **Adding a New Keyboard / Central Target Checklist:**
     Whenever a new keyboard is introduced to the repository (in `build.yaml`, `config/`, or `modules/boards/`):
-    1. **Identify the Central Target:** Identify which half or dongle acts as Central (e.g., `<keyboard>_dongle` or `<keyboard>_left`). The Central target is critical because it compiles the central BLE stack, all shared keymaps, behaviors, display widgets, and input processors.
+    1. **Identify the Central Target:** Identify which part acts as Central (a dedicated dongle e.g. `<keyboard>_dongle`, or in dongle-less setups, the designated central half—frequently Right e.g. `<keyboard>_right` or Left). The Central target is critical because it compiles the central BLE coordinator stack, all shared keymaps, behaviors, display widgets, and input processors.
     2. **Add Check Step to `.github/workflows/checks.yml`:** Add a build step for the new central target inside the `check-central-boards` job:
        ```yaml
        - name: Build <KeyboardName> Central
