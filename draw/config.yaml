@@ -16,6 +16,7 @@ parse_config:
     "&bt BT_SEL 1": BT 2
     "&bt BT_SEL 2": BT 3
     "&bt BT_SEL 3": BT 4
+    "&out OUT_TOG": BT/USB ⇄
 
     "&kp LC(INS)": Copy
     "&kp LC(X)": Cut
@@ -26,18 +27,28 @@ parse_config:
     "&kp LG(LC(LS(A)))": PinA.
     "&kp LG(LC(LS(Q)))": PinW.
 
-    "&swapper": NWin
+    "&kp LG(Z)": Undo
+    "&kp LG(LS(Z))": Redo
+    "&kp LG(X)": Cut
+    "&kp LG(C)": Copy
+    "&kp LG(V)": Paste
+
+    "&appswap": App ⇄
+    "&winswap": Win ⇄
+    "&tabswap": Tab ⇄
     "&kp LS(TAB)": PWin
     "&dot_spc": Sentence
     "&num_dance": { "t": "Smart"}
     "&magic_shift": { "t": Magic, "h": "Shift" }
     "&smart_mouse": Smart Mouse
+    "&tri_grave": { "t": "``` `"}
 
     "&hml LS(LALT)TAB": Tab
     "&hm_combo_ldr": Leader
     "&hm_combo_ldrsh": Shift+Leader
     "&hm_combo_lpar": { "t": "< (" }
     "&hm_combo_rpar": { "t": "> )"}
+    "&eq_bslash": { "t": "/ ="}
     "&kp LBKT": { "t": "{ ["}
     "&kp RBKT": { "t": "} ]"}
 
@@ -129,7 +140,7 @@ parse_config:
     EXCL: "!"
     EXCLAMATION: "!"
     FSLH: /
-    GRAVE: "`"
+    GRAVE: "~ `"
     GREATER_THAN: ">"
     GT: ">"
     HASH: "#"

@@ -1,14 +1,9 @@
 / {
-    chosen {
-        zmk,physical-layout = &physical_layout0;
-    };
-
     aliases {
         led-red = &led0;
         led-green = &led1;
         led-blue = &led2;
     };
-
     leds {
         compatible = "gpio-leds";
         status = "okay";

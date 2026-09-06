@@ -1,15 +1,39 @@
+---
+name: zmk-agent-workflow
+description: >-
+  Guidelines, build/sync commands, git workflow rules, and architectural rules for ZMK firmware development in this repository.
+  Use when configuring keymaps, modifying board DTS/overlays, building firmware targets with Nix/direnv/just,
+  managing west modules, tuning trackball input processors, configuring PAW32xx sensors, handling git commits/branches,
+  or working with split dongle/peripheral setups.
+---
+
 # ZMK Firmware Agent Workflow
+
+## Git Branching & Commit Policy
+- **NEVER Commit to `main`:** We NEVER commit directly to `main`. Always check the current working branch (`git branch --show-current`) before performing any git operations.
+- **Commit Only When Explicitly Requested:** Even when on a feature branch (not `main`), do NOT create commits automatically. Only commit if the user explicitly asked or authorized you to commit.
+- **Keep Changes Visible:** Keep all changes uncommitted in the working tree so they remain clearly visible for the user to review.
+- **No Deploy / Flash:** Do NOT attempt to flash hardware or run deployment tasks. The user tests all physical firmware flashes independently.
+- **Pull Requests (PRs):** NEVER open Pull Requests directly against upstream or other people's repositories unless explicitly instructed. ALWAYS open the PR against the user's own fork (e.g., `gh pr create --repo <user>/<repo> ...`).
+
+## Building & Workspace Toolchain (`Justfile` via Nix/direnv)
+The repository operates inside a Nix dev environment managed with direnv. Always execute `just` commands wrapped in `direnv exec .`:
+
+| Command | Purpose |
+| --- | --- |
+| `direnv exec . just list` | List all available build targets from `build.yaml` |
+| `direnv exec . just build <target>` | Build firmware for a target (e.g. `direnv exec . just build crosses_v2_dongle`, `direnv exec . just build all`). Compiled firmware lands in `firmware/`. |
+| `direnv exec . just sync` | Synchronize west workspace after manifest changes in `config/west.yml` (DO NOT run `west update` directly). |
+| `direnv exec . just clean` | Remove `.build` directory and `firmware/` artifacts. |
+| `direnv exec . just draw` | Regenerate keymap SVG diagrams (`draw/base.svg`, `draw/overview.svg`). |
+| `direnv exec . just format <paths>` | Format devicetree DTS files using `dts-format`. |
+| `direnv exec . just bump-west` | Bump pinned module revisions in `config/west.yml` via pin-west and sync. |
+| `direnv exec . just bump-nix` | Update `flake.lock` Nix toolchain. |
 
 ## Project Context
 - **Domain:** ZMK Firmware configuration for ergonomic keyboards (e.g., crossesV2, Glove80, Corne-ish Zen).
 - **Core Files:** Hardware DTS, overlays, and board defconfigs conventionally reside in `config/boards/` and `config/boards/shields/`, though shifting them into dedicated `modules/boards/` repositories is the modern ZMK best practice.
 - **Keymaps & Behaviors:** Files in `config/*.keymap` and `config/*.dtsi` (like `base.keymap`, `combos.dtsi`, `trackball_autolayer.dtsi`) define layer bindings, combos, mod-morphs, and adaptive keys.
-
-## Building & Syncing
-- **Environment:** The repository operates inside a Nix environment managed with direnv.
-- **Build Command:** Always use `direnv exec . just build <target>` (e.g., `direnv exec . just build crosses_v2_right`, `direnv exec . just build crosses_v2_dongle`). This utilizes the heavily cached setup and avoids rebuilding the Nix ecosystem.
-- **Syncing Modules:** Whenever a module is added, removed, or updated in `config/west.yml`, DO NOT run `west update` manually. Instead, run `direnv exec . just sync` (which wraps `west update` properly for this Nix ecosystem).
-- **Testing:** **DO NOT** attempt to run, flash, or test the firmware yourself. The USER manually flashes the compiled `.uf2` binaries onto the physical hardware.
 
 ## Zephyr / West Modules & Extensibility
 - **`modules/` is like `node_modules`:** External modules (e.g., `zmk-trackball-config`, `zmk-input-processor-*`, `zmk-adaptive-key`, `zmk-helpers`) are checked out under `modules/` via `config/west.yml`.
@@ -28,10 +52,11 @@
   *   **`remote`:** Explicitly declare the custom remote name unless pointing to `urob` repositories (as `urob` acts as the manifest default remote and can be omitted).
 - **Fixing Module Bugs using github CLI:**
   1. **Fork:** Use `gh repo fork <org>/<repo> --clone=false` inside the target `modules/` directory.
-  2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> HEAD:main`).
-  3. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork following the format above.
-  4. **Sync Space:** Run `direnv exec . just sync` to lock in the workspace.
-  5. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
+  2. **Push:** Add the fork as a remote (`git remote add <user> git@github.com:<user>/<repo>.git`), commit the local `modules/` changes, and push it up (`git push -u <user> <branch>`).
+  3. **Open PR:** If instructed to open a PR for the module, ALWAYS use the user's fork as the target repository (`gh pr create --repo <user>/<repo> --head <user>:<branch> ...`). `[CRITICAL: DO NOT OPEN PRs AGAINST UPSTREAM REPOS]`
+  4. **Pin Reference:** Grab the new commit SHA (`git rev-parse HEAD`), and update `remote` and `revision` strings in `config/west.yml` to point to the newly pushed fork following the format above.
+  5. **Sync Space:** Run `direnv exec . just sync` to lock in the workspace.
+  6. **Commit Workspace:** Finally, commit and push the `config/west.yml` changes in the main workspace repo.
 
 ## Trackball Input Processors & Scrolling Architecture
 - **Pipeline Order Matters:** For smooth and controllable trackball scrolling, always apply transformations and mappers in this order:
@@ -73,3 +98,11 @@
 ## Hardware Target Definition in `build.yaml`
 - **Use ZMK Board Variants (`//zmk`):** When adding targets to `build.yaml`, always use the `//zmk` suffix for boards that have ZMK-specific overrides (e.g., use `xiao_ble//zmk` instead of `xiao_ble`). 
   - **Reasoning:** Upstream Zephyr board definitions often rigidly lock pins for hardware features (like UART on D6 or SPI on D8). If you compile against the pure Zephyr definition (`xiao_ble`), those pins will silently fail to work for keyboard matrix scanning (causing entire dead rows or columns), and simply attempting to `status = "disabled";` the serial nodes in your `.overlay` will often **not** fix it. The `//zmk` out-of-tree variant provides the properly neutralized pin states required for keyboard matrices.
+
+## Verification & Build Validation
+- **Always Validate with a Build:** After making any firmware, keymap, overlay, or DTS changes, ALWAYS verify that compilation succeeds by running:
+  ```bash
+  direnv exec . just build <target>
+  ```
+  Confirm there are zero compilation errors before finishing your task.
+
