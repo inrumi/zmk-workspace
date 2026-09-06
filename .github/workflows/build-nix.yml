@@ -1,7 +1,6 @@
 name: Build ZMK firmware (nix)
 on:
   workflow_dispatch:
-  pull_request:
 
 permissions:
   contents: read

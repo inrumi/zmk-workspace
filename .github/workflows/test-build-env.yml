@@ -1,7 +1,6 @@
 name: Test Local Build Environment
 on:
   workflow_dispatch:
-  pull_request:
 
 permissions:
   contents: read
