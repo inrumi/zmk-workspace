@@ -106,3 +106,14 @@ The repository operates inside a Nix dev environment managed with direnv. Always
   ```
   Confirm there are zero compilation errors before finishing your task.
 
+## Upstream Fork Synchronization & Unused Board Pruning
+- **Synchronizing from Upstream (`urob/zmk-config`):**
+  - Fetch upstream updates: `git fetch upstream`.
+  - Inspect changes: `git log --oneline <merge-base>..upstream/main`. Upstream primarily bumps pinned west modules (`zmk`, `zmk-helpers`, `zmk-tri-state`, `zmk-unicode`) and workflow definitions.
+  - Review `config/west.yml` carefully during merges to keep custom board/sensor modules (`crosses-v2-zmk-firmware`, `keyboard-delta-omega`, trackball input processors) intact.
+  - Run `direnv exec . just sync` to update the West workspace after updating `west.yml`.
+- **Pruning Unused Boards (`build.yaml` and `config/`):**
+  - Upstream default boards that are not owned or built (e.g. `corneish_zen`, `glove80`, `planck_rev6`) are pruned from `build.yaml` to eliminate unnecessary GitHub Actions CI matrix runs (saving 10–15 min per push) and keep `direnv exec . just list` concise.
+  - The corresponding `.keymap` and `.conf` adapter files in `config/` can be safely removed.
+  - **Handling Future Merge Conflicts (modify/delete):** If upstream ever commits an update to a deleted board file (e.g. `config/corneish_zen.keymap`), git merge will report a `CONFLICT (modify/delete)`.
+    - **Resolution:** Simply execute `git rm config/<board>.keymap config/<board>.conf` and complete the merge. We do not maintain or flash those hardware targets.
