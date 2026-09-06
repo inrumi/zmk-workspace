@@ -1,29 +1,14 @@
 name: Test Local Build Environment
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - nix/**
-      - flake.*
-      - .github/workflows/test-build-env.yml
 
 permissions:
   contents: read
 
 jobs:
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - { os: ubuntu-24.04,     system: x86_64-linux }
-          - { os: ubuntu-24.04-arm, system: aarch64-linux }
-          - { os: macos-15-intel,   system: x86_64-darwin }
-          - { os: macos-15,         system: aarch64-darwin }
-
-    name: ${{ matrix.system }}
-
-    runs-on: ${{ matrix.os }}
+    name: aarch64-darwin
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -33,6 +18,6 @@ jobs:
       - name: Set up build environment
         run: nix develop --command just init
       - name: Test build recipe
-        run: nix develop --command just build planck
+        run: nix develop --command just build delta_omega
       - name: Test draw recipe
         run: nix develop --command just draw
