@@ -11,3 +11,5 @@
 
 #include "zmk-helpers/key-labels/34.h"
 #include "base.keymap"
+
+/{ chosen { zmk,physical-layout = &physical_layout0; }; };

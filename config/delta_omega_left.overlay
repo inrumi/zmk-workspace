@@ -1,8 +1,4 @@
 / {
-    chosen {
-        zmk,physical-layout = &physical_layout0;
-    };
-
     aliases {
         led-red = &led0;
         led-green = &led1;
