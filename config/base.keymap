@@ -14,7 +14,7 @@
 
 #define DEF 0
 #define NAV 1
-#define FN 2
+#define SYM 2
 #define NUM 3
 #define SYS 4
 #define MOUSE 5
@@ -131,13 +131,13 @@ ZMK_TAP_DANCE(num_dance, bindings = <&num_word NUM>, <&sl NUM>;
       smart_mouse, bindings = <&tog MOUSE>, <&none>, <&tog MOUSE>;
       ignored-key-positions =
           <RT0 RT1 RT2 RT3>;
-      ignored-layers = <MOUSE NAV FN>;)
+      ignored-layers = <MOUSE NAV SYM>;)
 #else
   ZMK_TRI_STATE(
       smart_mouse, bindings = <&tog MOUSE>, <&none>, <&tog MOUSE>;
       ignored-key-positions =
-          <LB2 LB3 LH0 LH1 RT1 RT2 RT3 RM0 RM1 RM2 RM3 RM4 RB1 RB2 RB3 RH0 RH1>;
-      ignored-layers = <MOUSE NAV FN>;)
+          <LT1 LT2 LH0 LH1 RT1 RT2 RT3 RM0 RM1 RM2 RM3 RM4 RB1 RB2 RB3 RH0 RH1>;
+      ignored-layers = <MOUSE NAV SYM>;)
 #endif
 
 /* Custom behaviors */
@@ -169,10 +169,13 @@ SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 
 // Tap: left/right parenthesis | Shft + tap: less-than/greater-than.
 SIMPLE_MORPH(lpar_lt, SFT, &kp LPAR, &kp LT)
+SIMPLE_MORPH(lpar_lt_hml, SFT, &hml LGUI LPAR, &hml LGUI LT)
 SIMPLE_MORPH(rpar_gt, SFT, &kp RPAR, &kp GT)
+SIMPLE_MORPH(rpar_gt_hml, SFT, &hml RSHFT RPAR, &hml RSHFT GT)
 
-// Tap: equals | Shft + tap: backward slash.
-SIMPLE_MORPH(eq_bslash, SFT, &kp EQUAL, &kp BSLH)
+// Tap: slash | Shift + tap: backslash.
+SIMPLE_MORPH(fslh_bslh, SFT, &kp SLASH, &kp BSLH)
+SIMPLE_MORPH(fslh_bslh_hmr, SFT, &hmr LGUI SLASH, &hmr LGUI BSLH)
 
 // Tap: space | Shift + tap: dot -> space -> sticky shift | Hold: nav layer.
 ZMK_HOLD_TAP(lt_spc, bindings = <&mo>, <&spc_morph>; flavor = "balanced";
@@ -202,7 +205,7 @@ ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 
 /* Keymap */
 
-ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
+ZMK_CONDITIONAL_LAYER(sys, SYM NUM, SYS) // SYM + NUM --> SYS.
 
 #ifndef ZMK_BASE_LAYER
   #define ZMK_BASE_LAYER(name, LT, RT, LM, RM, LB, RB, LH, RH)                 \
@@ -213,11 +216,11 @@ ZMK_BASE_LAYER(Base,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
     &kp Q         &kp W         &kp F         &kp P         &kp B       ,   &kp J         &kp L         &kp U         &kp Y         &kp SQT     ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &hml LCTRL A  &hml LALT R   &hml LGUI S   &kp T         &kp G       ,   &kp M         &kp N         &hmr LGUI E   &hmr LALT I   &hmr LCTRL O,
+    &hml LCTRL A  &hml LALT R   &hml LGUI S   &hml LSHFT T  &kp G       ,   &kp M         &hmr RSHFT N  &hmr LGUI E   &hmr LALT I   &hmr LCTRL O,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     &kp Z         &kp X         &kp C         &kp D         &kp V       ,   &kp K         &kp H         &comma_morph  &dot_morph    &qexcl      ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
-                                              &lt_spc NAV 0 &lt FN RET  ,   SMART_NUM     MAGIC_SHIFT
+                                              &lt_spc NAV 0 &lt SYM RET  ,   SMART_NUM     MAGIC_SHIFT
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
 )
 
@@ -233,25 +236,25 @@ ZMK_BASE_LAYER(Nav,
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
 )
 
-ZMK_BASE_LAYER(Fn,
+ZMK_BASE_LAYER(Sym,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-    &kp F12       &kp F7        &kp F8        &kp F9        ___         ,   &kp C_VOL_UP  &kp C_PREV    &kp C_PP      &kp C_NEXT    ___         ,
+    &kp GRAVE     &kp AT        &kp HASH      &kp DLLR      &kp PRCNT   ,   &kp CARET     &kp PLUS      &kp STAR      &kp AMPS      &kp EQUAL   ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &hml LCTRL F11 &hml LALT F4 &hml LGUI F5  &kp F6        ___         ,   &kp C_VOL_DN  ___           ___           ___           ___         ,
+    ___           &hml LALT LBKT &lpar_lt_hml &rpar_gt_hml  &kp RBKT    ,   &kp UNDER     &hmr RSHFT MINUS &fslh_bslh_hmr &hmr LALT PIPE ___    ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &kp F10       &kp F1        &kp F2        &kp F3        ___         ,   &kp C_MUTE    ___           ___           ___           ___         ,
-//╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
+    ___           ___           ___           ___           ___         ,   ___           ___           ___           ___           ___         ,
+//╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
                                               ___           ___         ,   ___           ___
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
 )
 
 ZMK_BASE_LAYER(Num,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-    CANCEL        &kp N7        &kp N8        &kp N9        ___         ,   ___           ___           ___           ___           ___         ,
+    CANCEL        &kp N7        &kp N8        &kp N9        ___         ,   &kp F12       &kp F9        &kp F8        &kp F7        ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &hml LCTRL N0 &hml LALT N4 &hml LGUI N5  &kp N6         ___         ,   ___           ___           ___           ___           ___         ,
+    &hml LCTRL N0 &hml LALT N4 &hml LGUI N5   &hmr LSHFT N6 ___         ,   &kp F11       &hmr RSHFT F6 &hmr LGUI F5  &hmr LALT F4  ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    ___           &kp N1        &kp N2        &kp N3        ___         ,   ___           ___           ___           ___           ___         ,
+    ___           &kp N1        &kp N2        &kp N3        ___         ,   &kp F10       &kp F3        &kp F2        &kp F1        ___         ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
                                               ___           ___         ,   ___           ___
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
@@ -259,11 +262,11 @@ ZMK_BASE_LAYER(Num,
 
 ZMK_BASE_LAYER(Sys,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-                               _BT_SEL_KEYS_                            ,   ___           ___           ___           ___           ___         ,
+                               _BT_SEL_KEYS_                            ,   ___           &kp C_PREV    &kp C_PP      &kp C_NEXT   &kp C_VOL_UP ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &bt BT_CLR    ___           ___           ___           &bootloader ,   &bootloader   ___           ___           ___           ___         ,
+    &bt BT_CLR    ___           ___           ___           &bootloader ,   &bootloader   ___           ___           ___          &kp C_VOL_DN ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    ___           ___           ___           ___           &sys_reset  ,   &sys_reset    ___           ___           ___           ___         ,
+    ___           ___           ___           ___           &sys_reset  ,   &sys_reset    ___           ___           ___           &kp C_MUTE  ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
                                               ___           ___         ,   ___           ___
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯

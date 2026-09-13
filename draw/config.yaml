@@ -43,6 +43,7 @@ parse_config:
     "&magic_shift": { "t": Magic, "h": "Shift" }
     "&smart_mouse": Smart Mouse
     "&tri_grave": { "t": "``` `"}
+    "&fslh_bslh": { "t": "/ \\" }
 
     "&hml LS(LALT)TAB": Tab
     "&hm_combo_ldr": Leader
@@ -207,7 +208,7 @@ draw_config:
         --color-dendron: #d5c4a1;
         --color-held:    #bdae93;
 
-        --color-fn:      #458588;
+        --color-sym:     #458588;
         --color-nav:     #d79921;
         --color-num:     #d65d0e;
         --color-sys:     #689d6a;
@@ -254,13 +255,13 @@ draw_config:
 
     path.combo { stroke: var(--color-dendron); stroke-width: 2; stroke-dasharray: 2, 3; opacity: 0.45; fill: none; }
 
-    text.tl, use.tl { fill: var(--color-fn); }
+    text.tl, use.tl { fill: var(--color-sym); }
     text.tr, use.tr { fill: var(--color-nav); }
     text.bl, use.bl { fill: var(--color-num); }
     text.br, use.br { fill: var(--color-sys); }
 
     .keypos-30 text.hold { fill: var(--color-nav); }
-    .keypos-31 text.hold { fill: var(--color-fn); }
+    .keypos-31 text.hold { fill: var(--color-sym); }
     .keypos-32 text.hold { fill: var(--color-num); font-size: 15px; }
     .keypos-32 text.tap  { fill: var(--color-num); }
     .keypos-33 text.hold { font-size: 15px; }
@@ -277,7 +278,7 @@ draw_config:
             --color-dendron: #504945;
             --color-held:    #665c54;
 
-            --color-fn:      #458588;
+            --color-sym:     #458588;
             --color-nav:     #fabd2f;
             --color-num:     #d65d0e;
             --color-sys:     #689d6a;
