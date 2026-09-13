@@ -120,7 +120,6 @@ text.br, use.br { fill: var(--color-sys); }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">W</text>
 <text x="-22" y="-22" class="key tl">F7</text>
-<text x="22" y="-22" class="key tr">Tab</text>
 <text x="-22" y="22" class="key bl">7</text>
 <text x="22" y="22" class="key br">BT 2</text>
 </g>
@@ -143,7 +142,6 @@ text.br, use.br { fill: var(--color-sys); }
 <g transform="translate(252, 52)" class="key keypos-4">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">B</text>
-<text x="22" y="-22" class="key tr">Tab ⇄</text>
 <text x="22" y="22" class="key br"><tspan style="font-size: 88%">BT/USB ⇄</tspan></text>
 </g>
 <g transform="translate(420, 52)" class="key keypos-5">
@@ -162,7 +160,6 @@ text.br, use.br { fill: var(--color-sys); }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">U</text>
 <use href="#mdi:play-pause" xlink:href="#mdi:play-pause" x="-22" y="-22" height="10" width="10.0" class="key tl glyph mdi:play-pause"/>
-<text x="22" y="-22" class="key tr">↑</text>
 </g>
 <g transform="translate(588, 46)" class="key keypos-8">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -181,7 +178,7 @@ text.br, use.br { fill: var(--color-sys); }
 <text x="-22" y="-22" class="key tl">F11</text>
 <text x="22" y="-22" class="key tr">Ctrl</text>
 <text x="-22" y="22" class="key bl">0</text>
-<text x="22" y="22" class="key br">BT CLR</text>
+<text x="22" y="22" class="key br">BT ↺</text>
 </g>
 <g transform="translate(84, 102)" class="key keypos-11">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -233,13 +230,13 @@ text.br, use.br { fill: var(--color-sys); }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">I</text>
 <text x="0" y="22" class="key hold">Alt</text>
-<text x="22" y="-22" class="key tr">→</text>
+<text x="22" y="-22" class="key tr">↑</text>
 </g>
 <g transform="translate(644, 137)" class="key keypos-19">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">O</text>
 <text x="0" y="22" class="key hold">Ctrl</text>
-<text x="22" y="-22" class="key tr">Enter</text>
+<text x="22" y="-22" class="key tr">→</text>
 </g>
 <g transform="translate(28, 193)" class="key keypos-20">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -283,6 +280,7 @@ text.br, use.br { fill: var(--color-sys); }
 <g transform="translate(476, 156)" class="key keypos-26">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">H</text>
+<text x="22" y="-22" class="key tr">Tab</text>
 </g>
 <g transform="translate(532, 140)" class="key keypos-27">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
@@ -298,6 +296,7 @@ text.br, use.br { fill: var(--color-sys); }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">?</text>
 <text x="0" y="-22" class="key shifted">!</text>
+<text x="22" y="-22" class="key tr">Enter</text>
 </g>
 <g transform="translate(221, 221) rotate(15.0)" class="key keypos-30">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>

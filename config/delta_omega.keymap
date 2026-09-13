@@ -1,5 +1,4 @@
 #define CONFIG_WIRELESS
-#define LEADER_FOR_MACOS
 
 #define ZMK_BASE_LAYER(name, LT, RT, LM, RM, LB, RB, LH, RH) \
     ZMK_LAYER( \

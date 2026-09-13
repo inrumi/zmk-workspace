@@ -23,30 +23,30 @@ ZMK_LEADER_SEQUENCE(de_ue,      &uc UC_DE_UE,         U E)  // ü
 ZMK_LEADER_SEQUENCE(de_eszett,  &uc UC_DE_SS,         S S)  // ß
 
 /* Spanish vowels with acute accent */
-ZMK_LEADER_SEQUENCE(es_a,      &uc UC_ES_A_ACUTE,     A) // Á, á
-ZMK_LEADER_SEQUENCE(es_e,      &uc UC_ES_E_ACUTE,     E) // É, é
-ZMK_LEADER_SEQUENCE(es_i,      &uc UC_ES_I_ACUTE,     I) // Î, î
-ZMK_LEADER_SEQUENCE(es_o,      &uc UC_ES_O_ACUTE,     O) // Ó, ó
-ZMK_LEADER_SEQUENCE(es_u,      &uc UC_ES_U_ACUTE,     U) // Ú, ú
+ZMK_LEADER_SEQUENCE(es_a,      &uc UC_ES_A_ACUTE,     T A) // Á, á
+ZMK_LEADER_SEQUENCE(es_e,      &uc UC_ES_E_ACUTE,     T E) // É, é
+ZMK_LEADER_SEQUENCE(es_i,      &uc UC_ES_I_ACUTE,     T I) // Î, î
+ZMK_LEADER_SEQUENCE(es_o,      &uc UC_ES_O_ACUTE,     T O) // Ó, ó
+ZMK_LEADER_SEQUENCE(es_u,      &uc UC_ES_U_ACUTE,     T U) // Ú, ú
 
 /* Special consonants and diaeresis */
-ZMK_LEADER_SEQUENCE(es_n,      &uc UC_ES_N_TILDE,     N) // Ñ, ñ
+ZMK_LEADER_SEQUENCE(es_n,      &uc UC_ES_N_TILDE,     N N) // Ñ, ñ
 
 /* Inverted punctuation marks */
 ZMK_LEADER_SEQUENCE(es_ques,   &uc UC_INVERTED_QUESTION_MARK,  QMARK) // ¿
 ZMK_LEADER_SEQUENCE(es_excl,   &uc UC_INVERTED_EXCLAMATION_MARK, EXCL) // ¡
 
 /* C-Cedilla (ç / Ç) - Catalan, Portuguese, French */
-ZMK_LEADER_SEQUENCE(cedilla_c,   &uc UC_FR_C_CEDILLA, C) // ç / Ç
+ZMK_LEADER_SEQUENCE(cedilla_c,   &uc UC_FR_C_CEDILLA, C C) // ç / Ç
 
 /* Euro (€) */
 ZMK_LEADER_SEQUENCE(sym_euro,    &uc UC_EURO_SIGN,  E E) // €
 
 /* Degree symbol (°) */
-ZMK_LEADER_SEQUENCE(sym_deg,     &uc UC_DEGREE_SIGN,  D) // °
+ZMK_LEADER_SEQUENCE(sym_deg,     &uc UC_DEGREE_SIGN,  D D) // °
 
 /* Multiplication sign (×) */
-ZMK_LEADER_SEQUENCE(sym_mult,    &uc UC_MULTIPLICATION_SIGN, X) // ×
+ZMK_LEADER_SEQUENCE(sym_mult,    &uc UC_MULTIPLICATION_SIGN, Z X) // ×
 
 // BLE and USB
 #ifdef CONFIG_WIRELESS

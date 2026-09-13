@@ -16,6 +16,7 @@ parse_config:
     "&bt BT_SEL 1": BT 2
     "&bt BT_SEL 2": BT 3
     "&bt BT_SEL 3": BT 4
+    "&bt BT_CLR": BT ↺
     "&out OUT_TOG": BT/USB ⇄
 
     "&kp LC(INS)": Copy
