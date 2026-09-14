@@ -152,7 +152,7 @@ parse_config:
     LEFT_BRACKET: "["
     LEFT_PARENTHESIS: (
     LESS_THAN: <
-    LPAR: (
+    LPAR: "< ("
     LT: <
     MINUS: "-"
     NON_US_BACKSLASH: \
@@ -173,7 +173,7 @@ parse_config:
     RIGHT_BRACE: "}"
     RIGHT_BRACKET: "]"
     RIGHT_PARENTHESIS: )
-    RPAR: )
+    RPAR: ") >"
     SEMI: ;
     SEMICOLON: ;
     SINGLE_QUOTE: "'"

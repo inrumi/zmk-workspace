@@ -201,7 +201,7 @@ text.br, use.br { fill: var(--color-sys); }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">S</text>
 <text x="0" y="22" class="key hold">Gui</text>
-<text x="-22" y="-22" class="key tl">(</text>
+<text x="-22" y="-22" class="key tl">&lt; (</text>
 <text x="22" y="-22" class="key tr">Gui</text>
 <text x="-22" y="22" class="key bl">5</text>
 </g>
@@ -209,7 +209,7 @@ text.br, use.br { fill: var(--color-sys); }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="1" class="key tap">T</text>
 <text x="0" y="22" class="key hold">Shift</text>
-<text x="-22" y="-22" class="key tl">)</text>
+<text x="-22" y="-22" class="key tl">) &gt;</text>
 <text x="22" y="-22" class="key tr">Shift</text>
 <text x="-22" y="22" class="key bl">6</text>
 </g>

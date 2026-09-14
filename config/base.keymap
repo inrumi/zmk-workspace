@@ -149,7 +149,7 @@ ZMK_BEHAVIOR(kt_off, key_toggle, toggle-mode = "off";)
 // Swapper settings for all window contexts
 ZMK_TRI_STATE(appswap, bindings = <&kt_on LGUI>, <&kp TAB>, <&kt_off LGUI>; ignored-key-positions = <LT2 RT2 RM1 RM2 RM3>;)
 ZMK_TRI_STATE(winswap, bindings = <&kt_on LGUI>, <&kp GRAVE>, <&kt_off LGUI>; ignored-key-positions = <LT1 RT1 RM1 RM2 RM3>;)
-// ZMK_TRI_STATE(tabswap, bindings = <&kt_on LCTRL>, <&kp TAB>,  <&kt_off LCTRL>; ignored-key-positions = <LT0 RT0 RM1 RM2 RM3>;)
+ZMK_TRI_STATE(tabswap, bindings = <&kt_on LCTRL>, <&kp TAB>,  <&kt_off LCTRL>; ignored-key-positions = <LT0 RT0 RM1 RM2 RM3>;)
 
 // Define mod-morph with a *single* mod trigger for less repetition.
 #define SIMPLE_MORPH(NAME, MOD, BINDING1, BINDING2)                            \
@@ -216,7 +216,7 @@ ZMK_BASE_LAYER(Base,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
     &kp Q         &kp W         &kp F         &kp P         &kp B       ,   &kp J         &kp L         &kp U         &kp Y         &kp SQT     ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &hml LCTRL A  &hml LALT R   &hml LGUI S   &hml LSHFT T  &kp G       ,   &kp M         &hmr RSHFT N  &hmr LGUI E   &hmr LALT I   &hmr LCTRL O,
+    &hml LCTRL A  &hml LALT R   &hml LGUI S   &kp T         &kp G       ,   &kp M         &kp N         &hmr LGUI E   &hmr LALT I   &hmr LCTRL O,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     &kp Z         &kp X         &kp C         &kp D         &kp V       ,   &kp K         &kp H         &comma_morph  &dot_morph    &qexcl      ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
@@ -226,7 +226,7 @@ ZMK_BASE_LAYER(Base,
 
 ZMK_BASE_LAYER(Nav,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-    &kp ESC       ___           &appswap      &winswap      ___         ,   &kp PG_UP     &kp BSPC      XXX           &kp DEL       ___         ,
+    &kp ESC       ___           &appswap      &winswap      &tabswap    ,   &kp PG_UP     &kp BSPC      XXX           &kp DEL       ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     &sk LCTRL     &sk LALT      &sk LGUI      &sk LSHFT     ___         ,   &kp PG_DN     &kp LEFT      &kp DOWN      &kp UP        &kp RIGHT   ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
@@ -240,7 +240,7 @@ ZMK_BASE_LAYER(Sym,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
     &kp GRAVE     &kp AT        &kp HASH      &kp DLLR      &kp PRCNT   ,   &kp CARET     &kp PLUS      &kp STAR      &kp AMPS      &kp EQUAL   ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    ___           &hml LALT LBKT &lpar_lt_hml &rpar_gt_hml  &kp RBKT    ,   &kp UNDER     &hmr RSHFT MINUS &fslh_bslh_hmr &hmr LALT PIPE ___    ,
+    ___           &hml LALT LBKT &lpar_lt_hml &rpar_gt      &kp RBKT    ,   &kp UNDER     &kp MINUS     &fslh_bslh_hmr &hmr LALT PIPE ___    ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     ___           ___           ___           ___           ___         ,   ___           ___           ___           ___           ___         ,
 //╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
@@ -252,7 +252,7 @@ ZMK_BASE_LAYER(Num,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
     CANCEL        &kp N7        &kp N8        &kp N9        ___         ,   &kp F12       &kp F9        &kp F8        &kp F7        ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-    &hml LCTRL N0 &hml LALT N4 &hml LGUI N5   &hmr LSHFT N6 ___         ,   &kp F11       &hmr RSHFT F6 &hmr LGUI F5  &hmr LALT F4  ___         ,
+    &hml LCTRL N0 &hml LALT N4 &hml LGUI N5   &kp N6        ___         ,   &kp F11       &kp F6        &hmr LGUI F5  &hmr LALT F4  ___         ,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     ___           &kp N1        &kp N2        &kp N3        ___         ,   &kp F10       &kp F3        &kp F2        &kp F1        ___         ,
 //╰─────────────┼─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴───────────────────────────╯
