@@ -53,6 +53,8 @@ parse_config:
     "&eq_bslash": { "t": "/ ="}
     "&kp LBKT": { "t": "{ ["}
     "&kp RBKT": { "t": "} ]"}
+    "&lpar_lt_hml": { "t": "< (", "h": "Alt" }
+    "&rpar_gt_hml": { "t": "> )", "h": "Gui" }
 
     "&mmv MOVE_UP": Mouse ↑
     "&mmv MOVE_DOWN": Mouse ↓

@@ -86,13 +86,13 @@ draw: _check_yq_version
     #!/usr/bin/env bash
     set -euo pipefail
     keymap -c "{{ draw }}/config.yaml" parse -z "{{ config }}/base.keymap" --virtual-layers Combos >"{{ draw }}/base.yaml"
-    yq -Yi '.combos.[].l = ["Combos"]' "{{ draw }}/base.yaml"
+    yq -Yi 'if .combos and (.combos | length > 0) then (.combos.[].l = ["Combos"]) else del(.layers.Combos) end' "{{ draw }}/base.yaml"
     keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/base.yaml" -k "ferris/sweep" >"{{ draw }}/base.svg"
 
     jq_expr='
         def extract_label: if type == "string" then . else .t end;
         def is_transparent: type == "object" and (.type == "trans" or .type == "held");
-        .layers = {
+        .layers = ({
         Base: [
             [.layers.Base, .layers.Nav, .layers.Sym, .layers.Num, .layers.Sys] | transpose[] |
             (.[0] | if type == "string" then {t: .} else . end) as $base |
@@ -105,10 +105,9 @@ draw: _check_yq_version
             + (if $sym == null then {} else {tl: $sym} end)
             + (if $num == null then {} else {bl: $num} end)
             + (if $sys == null then {} else {br: $sys} end)
-        ],
-        Combos: .layers.Combos
-        } |
-        .combos = [.combos[] | .l = ["Combos"]]
+        ]
+        } + (if .layers.Combos then {Combos: .layers.Combos} else {} end)) |
+        if .combos then .combos = [.combos[] | .l = ["Combos"]] else . end
     '
     yq -y "$jq_expr" "{{ draw }}/base.yaml" >"{{ draw }}/overview.yaml"
     keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/overview.yaml" -k "ferris/sweep" >"{{ draw }}/overview.svg"
