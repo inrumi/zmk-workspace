@@ -38,19 +38,16 @@ parse_config:
     "&winswap": Win ⇄
     "&tabswap": Tab ⇄
     "&kp LS(TAB)": PWin
-    "&dot_spc": Sentence
+    "&dot_spc": ""
     "&num_dance": { "t": "Smart"}
     "&magic_shift": { "t": Magic, "h": "Shift" }
     "&smart_mouse": Smart Mouse
-    "&tri_grave": { "t": "``` `"}
-    "&fslh_bslh": { "t": "/ \\" }
 
     "&hml LS(LALT)TAB": Tab
     "&hm_combo_ldr": Leader
     "&hm_combo_ldrsh": Shift+Leader
-    "&hm_combo_lpar": { "t": "< (" }
-    "&hm_combo_rpar": { "t": "> )"}
-    "&eq_bslash": { "t": "/ ="}
+    "&rpar_gt": { "t": "> )"}
+    "&lpar_lt": { "t": "< (" }
     "&kp LBKT": { "t": "{ ["}
     "&kp RBKT": { "t": "} ]"}
     "&lpar_lt_hml": { "t": "< (", "h": "Alt" }
@@ -144,7 +141,7 @@ parse_config:
     EXCL: "!"
     EXCLAMATION: "!"
     FSLH: /
-    GRAVE: "~ `"
+    GRAVE: "`"
     GREATER_THAN: ">"
     GT: ">"
     HASH: "#"
