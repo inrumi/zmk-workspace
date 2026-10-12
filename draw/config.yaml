@@ -34,9 +34,9 @@ parse_config:
     "&kp LG(C)": Copy
     "&kp LG(V)": Paste
 
-    "&appswap": App ⇄
-    "&winswap": Win ⇄
-    "&tabswap": Tab ⇄
+    "&appswap": App⇄
+    "&winswap": Win⇄
+    "&tabswap": Tab⇄
     "&kp LS(TAB)": PWin
     "&dot_spc": ""
     "&num_dance": { "t": "Smart"}
@@ -47,11 +47,11 @@ parse_config:
     "&hm_combo_ldr": Leader
     "&hm_combo_ldrsh": Shift+Leader
     "&rpar_gt": { "t": "> )"}
+    "&hml_rpar_gt": { "t": "> )", "h": "Gui"}
     "&lpar_lt": { "t": "< (" }
+    "&hml_lpar_lt": { "t": "< (", "h": "Alt" }
     "&kp LBKT": { "t": "{ ["}
     "&kp RBKT": { "t": "} ]"}
-    "&lpar_lt_hml": { "t": "< (", "h": "Alt" }
-    "&rpar_gt_hml": { "t": "> )", "h": "Gui" }
 
     "&mmv MOVE_UP": Mouse ↑
     "&mmv MOVE_DOWN": Mouse ↓
@@ -141,7 +141,7 @@ parse_config:
     EXCL: "!"
     EXCLAMATION: "!"
     FSLH: /
-    GRAVE: "`"
+    GRAVE: "~ `"
     GREATER_THAN: ">"
     GT: ">"
     HASH: "#"
@@ -151,7 +151,7 @@ parse_config:
     LEFT_BRACKET: "["
     LEFT_PARENTHESIS: (
     LESS_THAN: <
-    LPAR: "< ("
+    LPAR: (
     LT: <
     MINUS: "-"
     NON_US_BACKSLASH: \
@@ -172,7 +172,7 @@ parse_config:
     RIGHT_BRACE: "}"
     RIGHT_BRACKET: "]"
     RIGHT_PARENTHESIS: )
-    RPAR: ") >"
+    RPAR: )
     SEMI: ;
     SEMICOLON: ;
     SINGLE_QUOTE: "'"
@@ -187,7 +187,7 @@ parse_config:
 draw_config:
   append_colon_to_layer_header: false
   dark_mode: false
-  footer_text: "urob/zmk-config"
+  footer_text: "inrumi/zmk-config"
   glyph_tap_size: 15
   glyph_hold_size: 12
   glyph_shifted_size: 10
@@ -227,7 +227,7 @@ draw_config:
     }
 
     text.tap     { font-weight: 500; }
-    text.hold    { font-weight: 400; font-size: 13px; }
+    text.hold    { font-weight: 400; font-size: 11px; }
     text.shifted { font-weight: 400; font-size: 11px; }
     text.combo, text.left, text.right, text.tl, text.tr, text.bl, text.br { font-size: 10px; }
 
@@ -260,10 +260,11 @@ draw_config:
     text.br, use.br { fill: var(--color-sys); }
 
     .keypos-30 text.hold { fill: var(--color-nav); }
-    .keypos-31 text.hold { fill: var(--color-sym); }
+    .keypos-31 text.tap  { fill: var(--color-sym); }
     .keypos-32 text.hold { fill: var(--color-num); font-size: 15px; }
     .keypos-32 text.tap  { fill: var(--color-num); }
     .keypos-33 text.hold { font-size: 15px; }
+    .combo.sys text      { fill: var(--color-sys); }
 
     .icon-tabler > path                             { fill: inherit; stroke: inherit; stroke-width: 2; }
     .icon-tabler > path[stroke="none"][fill="none"] { visibility: hidden; }
