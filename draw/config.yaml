@@ -94,7 +94,7 @@ parse_config:
     BSPC: Bspc
     DEL: Del
     ESC: Esc
-    RET: Enter
+    RET: ↵
     SPACE: Spc
     TAB: Tab
 
