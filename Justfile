@@ -94,21 +94,63 @@ draw: _check_yq_version
         def is_transparent: type == "object" and (.type == "trans" or .type == "held");
         .layers = {
         Base: [
-            [.layers.Base, .layers.Nav, .layers.Fn, .layers.Num, .layers.Sys] | transpose[] |
+            [.layers.Base, .layers.Nav, .layers.Sym, .layers.Num, .layers.Sys] | transpose[] |
             (.[0] | if type == "string" then {t: .} else . end) as $base |
             (.[1] | if is_transparent then null else extract_label end) as $nav |
-            (.[2] | if is_transparent then null else extract_label end) as $fn |
+            (.[2] | if is_transparent then null else extract_label end) as $sym |
             (.[3] | if is_transparent then null else extract_label end) as $num |
             (.[4] | if is_transparent then null else extract_label end) as $sys |
             $base
             + (if $nav == null then {} else {tr: $nav} end)
-            + (if $fn == null then {} else {tl: $fn} end)
+            + (if $sym == null then {} else {tl: $sym} end)
             + (if $num == null then {} else {bl: $num} end)
             + (if $sys == null then {} else {br: $sys} end)
         ],
-        Combos: .layers.Combos
         } |
-        .combos = [.combos[] | .l = ["Combos"]]
+        .combos = ([
+            {
+                p: [31, 32],
+                k: {t: "Sys", type: "sys"},
+                l: ["Base"],
+                align: "bottom",
+                o: 0.5
+            },
+            {
+                p: [1, 2],
+                k: {t: "⎋"},
+                l: ["Base"],
+                align: "top",
+                o: 0.2
+            },
+            {
+                p: [2, 3],
+                k: {t: "⇥"},
+                l: ["Base"],
+                align: "top",
+                o: 0.2
+            },
+            {
+                p: [3, 4],
+                k: {t: "🐁"},
+                l: ["Base"],
+                align: "top",
+                o: 0.48
+            },
+            {
+                p: [6, 7],
+                k: {t: "⌫"},
+                l: ["Base"],
+                align: "top",
+                o: 0.2
+            },
+            {
+                p: [7, 8],
+                k: {t: "⌦"},
+                l: ["Base"],
+                align: "top",
+                o: 0.2
+            }
+        ])
     '
     yq -y "$jq_expr" "{{ draw }}/base.yaml" >"{{ draw }}/overview.yaml"
     keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/overview.yaml" -k "ferris/sweep" >"{{ draw }}/overview.svg"
