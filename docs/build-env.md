@@ -113,6 +113,10 @@ For UF2-based boards, simply copy the compiled firmware from the `firmware` dire
 board's USB mass-storage device. For boards that don't support UF2 (like the Planck),
 `just flash <target>` builds the firmware and flashes it via `west flash`.
 
+See [`docs/flashing-and-topologies.md`](flashing-and-topologies.md) for which `.uf2` files to flash
+in **Dongle** vs. **Dongle-less** setups (e.g. `crosses_v2_right.uf2` for Dongle-less Central vs.
+`crosses_v2_peripheral_right-crosses_v2_right.uf2` when paired with a Dongle).
+
 ### Drawing the keymap
 
 The build environment packages [keymap-drawer](https://github.com/caksoylar/keymap-drawer).
