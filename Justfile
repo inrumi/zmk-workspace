@@ -106,14 +106,15 @@ draw: _check_yq_version
             + (if $num == null then {} else {bl: $num} end)
             + (if $sys == null then {} else {br: $sys} end)
         ],
+        Combos: .layers.Combos
         } |
-        .combos = ([
+        .combos = ([.combos[] | .l = ["Combos"]] + [
             {
-                p: [31, 32],
-                k: {t: "Sys", type: "sys"},
+                p: [30, 33],
+                k: {t: "Sym", type: "sym"},
                 l: ["Base"],
                 align: "bottom",
-                o: 0.5
+                o: .6
             },
             {
                 p: [1, 2],

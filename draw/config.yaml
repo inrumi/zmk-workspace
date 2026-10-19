@@ -40,7 +40,7 @@ parse_config:
     "&kp LS(TAB)": PWin
     "&dot_spc": ""
     "&num_dance": { "t": "Smart"}
-    "&magic_shift": { "t": Magic, "h": "Shift" }
+    "&magic_shift": { "t": Shift, "h": "Num", "s": Magic }
     "&smart_mouse": Smart Mouse
 
     "&hml LS(LALT)TAB": Tab
@@ -263,8 +263,8 @@ draw_config:
     .keypos-31 text.tap  { fill: var(--color-sym); }
     .keypos-32 text.hold { fill: var(--color-num); font-size: 15px; }
     .keypos-32 text.tap  { fill: var(--color-num); }
-    .keypos-33 text.hold { font-size: 15px; }
-    .combo.sys text      { fill: var(--color-sys); }
+    .keypos-33 text.hold { fill: var(--color-num); }
+    .combo.sym text      { fill: var(--color-sym); }
 
     .icon-tabler > path                             { fill: inherit; stroke: inherit; stroke-width: 2; }
     .icon-tabler > path[stroke="none"][fill="none"] { visibility: hidden; }

@@ -80,9 +80,10 @@ The repository operates inside a Nix dev environment managed with direnv. Always
 - **Key Repeat with Modifiers:** When binding to `&key_repeat`, set `strict-modifiers;` if the trigger should only fire when the exact modifier state of the trigger key matches the prior keypress.
 
 ## Split Hardware Architecture (Dongle vs Dongle-less)
-- **Central vs Peripheral Roles:**
-  - In a Dongle build: The dongle is Central; both left and right keyboard halves are Peripherals.
-  - In a Dongle-less build: One half (typically Right) is Central; the other is Peripheral.
+- **Central vs Peripheral Roles & Artifact Mapping (see `docs/flashing-and-topologies.md`):**
+  - **Dongle-less build (2 devices):** Right half is **Central** (`firmware/crosses_v2_right.uf2`, built from `board: crosses_v2_right`); Left half is **Peripheral** (`firmware/crosses_v2_left.uf2`).
+  - **Dongle build (3 devices):** Dongle is **Central** (`firmware/crosses_v2_dongle+dongle_display-nice_nano__zmk.uf2`); Left half is **Peripheral** (`firmware/crosses_v2_left.uf2`); Right half is **Peripheral** (`firmware/crosses_v2_peripheral_right-crosses_v2_right.uf2`, which layers `shield: crosses_v2_peripheral_right` onto `board: crosses_v2_right` to set `CONFIG_ZMK_SPLIT_ROLE_CENTRAL=n`).
+  - **Note on `just build crosses_v2_right`:** Because `just build <expr>` matches substrings across `build.yaml`, `just build crosses_v2_right` builds **both** `crosses_v2_right.uf2` (Dongle-less Central) and `crosses_v2_peripheral_right-crosses_v2_right.uf2` (Dongle Peripheral).
 - **Input Split & Processing Locality:**
   - ZMK's `input-split` beams **RAW, unprocessed** sensor deltas from Peripherals to the Central.
   - Input processors (e.g., `zmk,input-processor-pipeline-switch`, `input-listener` overrides) **MUST attach on the Central**. Peripherals do not run input pipelines.

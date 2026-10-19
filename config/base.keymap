@@ -107,11 +107,13 @@ MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
 
 /* Magic-shift & auto-layers */
 
-// Tap: sticky-shift | Double-tap: caps-word | Hold: shift.
-#define MAGIC_SHIFT &magic_shift LSHFT 0
-ZMK_HOLD_TAP(magic_shift, bindings = <&kp>, <&magic_shift_tap>;
+// Tap: sticky-shift | Double-tap: caps-word | Hold: num-layer.
+#define MAGIC_SHIFT &magic_shift NUM 0
+ZMK_HOLD_TAP(magic_shift, bindings = <&mo>, <&magic_shift_tap>;
              flavor = "tap-preferred"; tapping-term-ms = <200>;
-             quick-tap-ms = <QUICK_TAP_MS>;)
+             quick-tap-ms = <QUICK_TAP_MS>;
+             hold-trigger-on-release;
+             hold-trigger-key-positions = <KEYS_L THUMBS>;)
 ZMK_MOD_MORPH(magic_shift_tap, bindings = <&sk LSHFT>, <&caps_word>;
               mods = <(MOD_LSFT)>;)
 &caps_word { // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
@@ -195,7 +197,7 @@ ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
 #define paste     &kp LG(V)
 
 /* Keymap */
-ZMK_CONDITIONAL_LAYER(sys,  SYM NUM, SYS)  // SYM + NUM --> SYS.
+ZMK_CONDITIONAL_LAYER(sys,  NAV NUM, SYM)  // NAV + NUM --> SYM.
 
 #ifndef ZMK_BASE_LAYER
   #define ZMK_BASE_LAYER(name, LT, RT, LM, RM, LB, RB, LH, RH)                 \
@@ -210,7 +212,7 @@ ZMK_BASE_LAYER(Base,
 //├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
     &kp Z         &kp X         &kp C         &kp D         &kp V       ,   &kp K         &kp H         &comma_morph  &dot_morph    &qexcl      ,
 //╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┤ ├─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                              &lt_spc NAV 0 &mo SYM     ,   SMART_NUM     MAGIC_SHIFT
+                                              &lt_spc NAV 0 ___         ,   ___           MAGIC_SHIFT
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
 )
 
