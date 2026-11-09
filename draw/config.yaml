@@ -16,6 +16,7 @@ parse_config:
     "&bt BT_SEL 1": BT 2
     "&bt BT_SEL 2": BT 3
     "&bt BT_SEL 3": BT 4
+    "&bt BT_CLR": BT ↺
     "&out OUT_TOG": BT/USB ⇄
 
     "&kp LC(INS)": Copy
@@ -33,22 +34,22 @@ parse_config:
     "&kp LG(C)": Copy
     "&kp LG(V)": Paste
 
-    "&appswap": App ⇄
-    "&winswap": Win ⇄
-    "&tabswap": Tab ⇄
+    "&appswap": App⇄
+    "&winswap": Win⇄
+    "&tabswap": Tab⇄
     "&kp LS(TAB)": PWin
-    "&dot_spc": Sentence
+    "&dot_spc": ""
     "&num_dance": { "t": "Smart"}
-    "&magic_shift": { "t": Magic, "h": "Shift" }
+    "&magic_shift": { "t": Shift, "h": "Num", "s": Magic }
     "&smart_mouse": Smart Mouse
-    "&tri_grave": { "t": "``` `"}
 
     "&hml LS(LALT)TAB": Tab
     "&hm_combo_ldr": Leader
     "&hm_combo_ldrsh": Shift+Leader
-    "&hm_combo_lpar": { "t": "< (" }
-    "&hm_combo_rpar": { "t": "> )"}
-    "&eq_bslash": { "t": "/ ="}
+    "&rpar_gt": { "t": "> )"}
+    "&hml_rpar_gt": { "t": "> )", "h": "Gui"}
+    "&lpar_lt": { "t": "< (" }
+    "&hml_lpar_lt": { "t": "< (", "h": "Alt" }
     "&kp LBKT": { "t": "{ ["}
     "&kp RBKT": { "t": "} ]"}
 
@@ -93,7 +94,7 @@ parse_config:
     BSPC: Bspc
     DEL: Del
     ESC: Esc
-    RET: Enter
+    RET: ↵
     SPACE: Spc
     TAB: Tab
 
@@ -186,7 +187,7 @@ parse_config:
 draw_config:
   append_colon_to_layer_header: false
   dark_mode: false
-  footer_text: "urob/zmk-config"
+  footer_text: "inrumi/zmk-config"
   glyph_tap_size: 15
   glyph_hold_size: 12
   glyph_shifted_size: 10
@@ -206,7 +207,7 @@ draw_config:
         --color-dendron: #d5c4a1;
         --color-held:    #bdae93;
 
-        --color-fn:      #458588;
+        --color-sym:     #458588;
         --color-nav:     #d79921;
         --color-num:     #d65d0e;
         --color-sys:     #689d6a;
@@ -226,7 +227,7 @@ draw_config:
     }
 
     text.tap     { font-weight: 500; }
-    text.hold    { font-weight: 400; font-size: 13px; }
+    text.hold    { font-weight: 400; font-size: 11px; }
     text.shifted { font-weight: 400; font-size: 11px; }
     text.combo, text.left, text.right, text.tl, text.tr, text.bl, text.br { font-size: 10px; }
 
@@ -253,16 +254,17 @@ draw_config:
 
     path.combo { stroke: var(--color-dendron); stroke-width: 2; stroke-dasharray: 2, 3; opacity: 0.45; fill: none; }
 
-    text.tl, use.tl { fill: var(--color-fn); }
+    text.tl, use.tl { fill: var(--color-sym); }
     text.tr, use.tr { fill: var(--color-nav); }
     text.bl, use.bl { fill: var(--color-num); }
     text.br, use.br { fill: var(--color-sys); }
 
     .keypos-30 text.hold { fill: var(--color-nav); }
-    .keypos-31 text.hold { fill: var(--color-fn); }
+    .keypos-31 text.tap  { fill: var(--color-sym); }
     .keypos-32 text.hold { fill: var(--color-num); font-size: 15px; }
     .keypos-32 text.tap  { fill: var(--color-num); }
-    .keypos-33 text.hold { font-size: 15px; }
+    .keypos-33 text.hold { fill: var(--color-num); }
+    .combo.sym text      { fill: var(--color-sym); }
 
     .icon-tabler > path                             { fill: inherit; stroke: inherit; stroke-width: 2; }
     .icon-tabler > path[stroke="none"][fill="none"] { visibility: hidden; }
@@ -276,7 +278,7 @@ draw_config:
             --color-dendron: #504945;
             --color-held:    #665c54;
 
-            --color-fn:      #458588;
+            --color-sym:     #458588;
             --color-nav:     #fabd2f;
             --color-num:     #d65d0e;
             --color-sys:     #689d6a;
